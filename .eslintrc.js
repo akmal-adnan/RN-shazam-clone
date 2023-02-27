@@ -15,6 +15,6 @@ module.exports = {
     'react/function-component-definition': 'off',
     'import/no-extraneous-dependencies': 'off',
     'react/prop-types': 'off',
-    // 'no-use-before-define': ['error', {variables: false}],
+    'no-use-before-define': ['error', {variables: false}],
   },
 };

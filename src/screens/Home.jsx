@@ -1,16 +1,19 @@
-import {View, Text, Button} from 'react-native';
+import {View, Text, SafeAreaView} from 'react-native';
 import React from 'react';
+import {COLORS, FONTS} from '../constants/theme';
 
-const Home = ({navigation}) => (
-  <View>
-    <Text>Home</Text>
-    <Button
-      onPress={() => navigation.push('Charts')}
-      title="Learn More"
-      color="#841584"
-      accessibilityLabel="Learn more about this purple button"
-    />
-  </View>
+const Home = () => (
+  <SafeAreaView
+    style={{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: COLORS.blue4,
+    }}>
+    <View>
+      <Text style={{...FONTS.m1}}>Tap to Shazam</Text>
+    </View>
+  </SafeAreaView>
 );
 
 export default Home;

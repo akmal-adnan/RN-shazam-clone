@@ -1,10 +1,18 @@
-import {View, Text} from 'react-native';
+import {View, Text, SafeAreaView} from 'react-native';
 import React from 'react';
 
 const Library = () => (
-  <View>
-    <Text>Library</Text>
-  </View>
+  <SafeAreaView
+    style={{
+      flex: 1,
+      backgroundColor: 'red',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}>
+    <View>
+      <Text>Library</Text>
+    </View>
+  </SafeAreaView>
 );
 
 export default Library;

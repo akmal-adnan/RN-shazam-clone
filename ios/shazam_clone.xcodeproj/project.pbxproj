@@ -14,7 +14,15 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-shazam_clone-shazam_cloneTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-shazam_clone-shazam_cloneTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		C1C8891529ACB6300004A917 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1C8891429ACB6300004A917 /* BootSplash.storyboard */; };
 		C1ED3FB129A7B66200112DB7 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = C1ED3FB029A7B66200112DB7 /* Fonts */; };
+		B0A5F8863BCC4EABA20AEFDE /* NeueMontreal-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D07E635CA1584F6089B17650 /* NeueMontreal-Bold.otf */; };
+		2A88ADDAE3EE4CDB8DAE6431 /* NeueMontreal-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = E706540A7ECA46B0BE61532F /* NeueMontreal-Light.otf */; };
+		73DC2C369574451FAC496C63 /* NeueMontreal-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5E3C56BCC824A638843C7F8 /* NeueMontreal-Medium.otf */; };
+		8C594B3D9F8441ECAF2CCF9F /* NeueMontreal-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638545A3BFF94585AE7AEF6D /* NeueMontreal-Regular.otf */; };
+		4D3B728582A1409BA761EFFF /* Arial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85DC0B64CE60451797700D47 /* Arial.ttf */; };
+		FDAACB99ABE24C0A9B1B6944 /* Arial-Bold-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E44C5BF3A0EB433FA6F1597F /* Arial-Bold-Italic.ttf */; };
+		93B0752000EA4FC8A9799D62 /* Arial-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67BD4EA9D06A4596BAFBB5A3 /* Arial-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,8 +52,16 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-shazam_clone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-shazam_clone.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = shazam_clone/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-shazam_clone-shazam_cloneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shazam_clone-shazam_cloneTests.release.xcconfig"; path = "Target Support Files/Pods-shazam_clone-shazam_cloneTests/Pods-shazam_clone-shazam_cloneTests.release.xcconfig"; sourceTree = "<group>"; };
+		C1C8891429ACB6300004A917 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = shazam_clone/BootSplash.storyboard; sourceTree = "<group>"; };
 		C1ED3FB029A7B66200112DB7 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		D07E635CA1584F6089B17650 /* NeueMontreal-Bold.otf */ = {isa = PBXFileReference; name = "NeueMontreal-Bold.otf"; path = "../src/assets/fonts/NeueMontreal-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E706540A7ECA46B0BE61532F /* NeueMontreal-Light.otf */ = {isa = PBXFileReference; name = "NeueMontreal-Light.otf"; path = "../src/assets/fonts/NeueMontreal-Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B5E3C56BCC824A638843C7F8 /* NeueMontreal-Medium.otf */ = {isa = PBXFileReference; name = "NeueMontreal-Medium.otf"; path = "../src/assets/fonts/NeueMontreal-Medium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		638545A3BFF94585AE7AEF6D /* NeueMontreal-Regular.otf */ = {isa = PBXFileReference; name = "NeueMontreal-Regular.otf"; path = "../src/assets/fonts/NeueMontreal-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		85DC0B64CE60451797700D47 /* Arial.ttf */ = {isa = PBXFileReference; name = "Arial.ttf"; path = "../src/assets/fonts/Arial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E44C5BF3A0EB433FA6F1597F /* Arial-Bold-Italic.ttf */ = {isa = PBXFileReference; name = "Arial-Bold-Italic.ttf"; path = "../src/assets/fonts/Arial-Bold-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		67BD4EA9D06A4596BAFBB5A3 /* Arial-Bold.ttf */ = {isa = PBXFileReference; name = "Arial-Bold.ttf"; path = "../src/assets/fonts/Arial-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +109,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				C1C8891429ACB6300004A917 /* BootSplash.storyboard */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -125,6 +142,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				D9AFA19886CE412AAA8921BF /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -150,6 +168,21 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		D9AFA19886CE412AAA8921BF /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				D07E635CA1584F6089B17650 /* NeueMontreal-Bold.otf */,
+				E706540A7ECA46B0BE61532F /* NeueMontreal-Light.otf */,
+				B5E3C56BCC824A638843C7F8 /* NeueMontreal-Medium.otf */,
+				638545A3BFF94585AE7AEF6D /* NeueMontreal-Regular.otf */,
+				85DC0B64CE60451797700D47 /* Arial.ttf */,
+				E44C5BF3A0EB433FA6F1597F /* Arial-Bold-Italic.ttf */,
+				67BD4EA9D06A4596BAFBB5A3 /* Arial-Bold.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -248,6 +281,14 @@
 				C1ED3FB129A7B66200112DB7 /* Fonts in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				C1C8891529ACB6300004A917 /* BootSplash.storyboard in Resources */,
+				B0A5F8863BCC4EABA20AEFDE /* NeueMontreal-Bold.otf in Resources */,
+				2A88ADDAE3EE4CDB8DAE6431 /* NeueMontreal-Light.otf in Resources */,
+				73DC2C369574451FAC496C63 /* NeueMontreal-Medium.otf in Resources */,
+				8C594B3D9F8441ECAF2CCF9F /* NeueMontreal-Regular.otf in Resources */,
+				4D3B728582A1409BA761EFFF /* Arial.ttf in Resources */,
+				FDAACB99ABE24C0A9B1B6944 /* Arial-Bold-Italic.ttf in Resources */,
+				93B0752000EA4FC8A9799D62 /* Arial-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
