@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useEffect} from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
 import Animated, {
   useSharedValue,
@@ -47,7 +47,24 @@ const PageIndicator = ({data, scrollX}) => (
 
 const MainScreen = () => {
   const slidesRef = useRef();
-  const scrollX = useSharedValue(0);
+  const scrollX = useSharedValue(393);
+
+  useEffect(() => {
+    slidesRef.current.scrollToIndex({index: 1, animated: false});
+  }, []);
+
+  const scrollFailed = () => {
+    const wait = new Promise(resolve => {
+      setTimeout(resolve, 10);
+    });
+
+    wait.then(() => {
+      slidesRef.current?.scrollToIndex({
+        index: 1,
+        animated: false,
+      });
+    });
+  };
 
   const renderItem = ({item}) => (
     <View style={{width: SIZES.width, height: SIZES.height}}>
@@ -67,6 +84,7 @@ const MainScreen = () => {
         data={SCREEN}
         renderItem={renderItem}
         keyExtractor={item => item.key}
+        onScrollToIndexFailed={scrollFailed}
         onScroll={useAnimatedScrollHandler(event => {
           scrollX.value = event.contentOffset.x;
         })}
