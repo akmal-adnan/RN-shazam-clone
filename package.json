@@ -7,7 +7,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint src/**/*.{js,ts,jsx,tsx} --quiet --fix",
+    "lint": "eslint src/**/*.{jsx,js} --quiet --fix",
     "prettier": "prettier --write src/**/*.{js,ts,jsx,tsx}"
   },
   "dependencies": {

@@ -70,6 +70,4 @@ export const FONTS = {
   l5: {fontFamily: 'NeueMontreal-Light', fontSize: SIZES.body5, lineHeight: 22},
 };
 
-const appTheme = {COLORS, SIZES, FONTS};
-
-export default appTheme;
+export default {COLORS, SIZES, FONTS};

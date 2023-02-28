@@ -10,7 +10,7 @@ import Animated, {
 import Home from './Home';
 import Charts from './Charts';
 import Library from './Library';
-import {COLORS, SIZES} from '../constants/theme';
+import {COLORS, SIZES} from '../constants';
 
 const ReanimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -34,7 +34,7 @@ const PageIndicator = ({data, scrollX}) => (
         const animatedIndicator = interpolate(
           scrollX.value,
           inputRange,
-          [8, 20, 8],
+          [6, 15, 6],
           Extrapolate.CLAMP,
         );
         return {width: animatedIndicator};
@@ -105,13 +105,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
     alignSelf: 'center',
-    top: SIZES.height / 11,
+    top: SIZES.height / 12,
   },
 
   dot: {
-    height: 8,
+    height: 6,
     borderRadius: 10,
-    backgroundColor: COLORS.icon1,
+    backgroundColor: COLORS.white1,
     marginHorizontal: 3.5,
   },
 });
