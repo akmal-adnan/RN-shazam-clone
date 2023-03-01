@@ -14,12 +14,6 @@ import {COLORS, SIZES} from '../constants';
 
 const ReanimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-const SCREEN = [
-  {key: 'library', component: <Library />},
-  {key: 'home', component: <Home />},
-  {key: 'charts', component: <Charts />},
-];
-
 const PageIndicator = ({data, scrollX}) => (
   <View style={{flexDirection: 'row'}}>
     {data.map((item, i) => {
@@ -45,9 +39,24 @@ const PageIndicator = ({data, scrollX}) => (
   </View>
 );
 
-const MainScreen = () => {
+const MainScreen = ({navigation}) => {
   const slidesRef = useRef();
   const scrollX = useSharedValue(393);
+
+  const SCREEN = [
+    {
+      key: 'library',
+      component: <Library navigation={navigation} slidesRef={slidesRef} />,
+    },
+    {
+      key: 'home',
+      component: <Home navigation={navigation} slidesRef={slidesRef} />,
+    },
+    {
+      key: 'charts',
+      component: <Charts navigation={navigation} slidesRef={slidesRef} />,
+    },
+  ];
 
   useEffect(() => {
     slidesRef.current.scrollToIndex({index: 1, animated: false});

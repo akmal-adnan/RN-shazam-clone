@@ -1,15 +1,36 @@
-import {View, Text, SafeAreaView, StyleSheet, Image} from 'react-native';
 import React from 'react';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+  withSequence,
+} from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SearchIco from 'react-native-vector-icons/FontAwesome';
 import {COLORS, FONTS, IMAGES, SIZES, SVG} from '../constants';
 
-const Home = () => {
+const Home = ({slidesRef}) => {
+  const pulse = useSharedValue(1);
+
   // Top component
   const renderTop = () => (
     <View style={styles.top__container}>
-      <View style={styles.icon__container}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        style={styles.icon__container}
+        onPress={() =>
+          slidesRef.current.scrollToIndex({index: 0, animated: true})
+        }>
         <View style={styles.library__icon}>
           <Icons
             name="account-music"
@@ -19,9 +40,14 @@ const Home = () => {
           />
         </View>
         <Text style={styles.icon__text}>Library</Text>
-      </View>
+      </TouchableOpacity>
 
-      <View style={styles.icon__container}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        style={styles.icon__container}
+        onPress={() =>
+          slidesRef.current.scrollToIndex({index: 2, animated: true})
+        }>
         <View style={styles.charts__icon}>
           <Image
             source={IMAGES.ChartsIcon}
@@ -30,17 +56,33 @@ const Home = () => {
           />
         </View>
         <Text style={styles.icon__text}>Charts</Text>
-      </View>
+      </TouchableOpacity>
     </View>
   );
+
+  React.useEffect(() => {
+    pulse.value = withRepeat(
+      withSequence(
+        withTiming(1.06, {duration: 1200}),
+        withTiming(1, {duration: 1200}),
+      ),
+      -1,
+    );
+  });
+
+  // Define the pulsating animation
+  const pulseAnimation = useAnimatedStyle(() => ({
+    transform: [{scale: pulse.value}],
+  }));
 
   // Logo component
   const renderShazamLogo = () => (
     <View style={styles.shazam__container}>
       <Text style={styles.shazam__text}>Tap to Shazam</Text>
-      <View style={[styles.shazam__logo, styles.shadow]}>
+      <Animated.View
+        style={[styles.shazam__logo, styles.shadow, pulseAnimation]}>
         <SVG.ShazamLogo2SVG width={145} height={145} fill={COLORS.white1} />
-      </View>
+      </Animated.View>
 
       <View style={[styles.search__container, styles.shadow]}>
         <SearchIco
