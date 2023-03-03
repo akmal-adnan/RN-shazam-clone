@@ -12,6 +12,7 @@ module.exports = {
   plugins: ['react'],
   rules: {
     'no-console': 'off',
+    'no-param-reassign': 'off',
     'react/function-component-definition': 'off',
     'import/no-extraneous-dependencies': 'off',
     'react/prop-types': 'off',

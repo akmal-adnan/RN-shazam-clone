@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -17,14 +10,18 @@ import Animated, {
 import LinearGradient from 'react-native-linear-gradient';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SearchIco from 'react-native-vector-icons/FontAwesome';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {COLORS, FONTS, IMAGES, SIZES, SVG} from '../constants';
 
 const Home = ({slidesRef}) => {
   const pulse = useSharedValue(1);
 
+  const inset = useSafeAreaInsets();
+
   // Top component
   const renderTop = () => (
-    <View style={styles.top__container}>
+    <View
+      style={{...styles.top__container, paddingTop: inset.top, marginTop: 12}}>
       <TouchableOpacity
         activeOpacity={0.8}
         style={styles.icon__container}
@@ -63,7 +60,7 @@ const Home = ({slidesRef}) => {
   React.useEffect(() => {
     pulse.value = withRepeat(
       withSequence(
-        withTiming(1.06, {duration: 1200}),
+        withTiming(1.05, {duration: 1200}),
         withTiming(1, {duration: 1200}),
       ),
       -1,
@@ -81,7 +78,7 @@ const Home = ({slidesRef}) => {
       <Text style={styles.shazam__text}>Tap to Shazam</Text>
       <Animated.View
         style={[styles.shazam__logo, styles.shadow, pulseAnimation]}>
-        <SVG.ShazamLogo2SVG width={145} height={145} fill={COLORS.white1} />
+        <SVG.ShazamLogo2SVG width={150} height={150} fill={COLORS.white1} />
       </Animated.View>
 
       <View style={[styles.search__container, styles.shadow]}>
@@ -97,10 +94,8 @@ const Home = ({slidesRef}) => {
 
   return (
     <LinearGradient colors={[COLORS.blue4, COLORS.blue3]} style={{flex: 1}}>
-      <SafeAreaView style={styles.main__container}>
-        {renderTop()}
-        {renderShazamLogo()}
-      </SafeAreaView>
+      {renderTop()}
+      {renderShazamLogo()}
     </LinearGradient>
   );
 };
@@ -128,7 +123,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingTop: 8,
   },
 
   icon__container: {justifyContent: 'center', alignItems: 'center'},
@@ -168,7 +162,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.white1,
     backgroundColor: '#4FB3FE',
     padding: 30,
-    borderRadius: 100,
+    borderRadius: 1000,
   },
 
   search__container: {

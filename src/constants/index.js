@@ -1,4 +1,5 @@
 import {IMAGES, SVG} from './images';
 import {COLORS, SIZES, FONTS} from './theme';
+import {ChartsByCountry} from './dummyData';
 
-export {IMAGES, SVG, COLORS, SIZES, FONTS};
+export {IMAGES, SVG, COLORS, SIZES, FONTS, ChartsByCountry};

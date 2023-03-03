@@ -1,11 +1,13 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, {useRef, useEffect} from 'react';
-import {View, FlatList, StyleSheet} from 'react-native';
+import {View, FlatList, StyleSheet, StatusBar, Platform} from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   interpolate,
   Extrapolate,
   useAnimatedScrollHandler,
+  interpolateColor,
 } from 'react-native-reanimated';
 import Home from './Home';
 import Charts from './Charts';
@@ -23,21 +25,63 @@ const PageIndicator = ({data, scrollX}) => (
         (i + 1) * SIZES.width,
       ];
 
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const dotWidth = useAnimatedStyle(() => {
         const animatedIndicator = interpolate(
           scrollX.value,
           inputRange,
-          [6, 15, 6],
+          [6, 7, 6],
           Extrapolate.CLAMP,
         );
         return {width: animatedIndicator};
       });
 
-      return <Animated.View style={[styles.dot, dotWidth]} key={item.key} />;
+      const bgColor = useAnimatedStyle(() => {
+        const animatedIndicator = interpolateColor(
+          scrollX.value,
+          [0, 393, 780],
+          ['#B4B4B4', COLORS.icon1, '#B4B4B4'],
+        );
+        return {
+          backgroundColor: animatedIndicator,
+        };
+      });
+
+      return (
+        <Animated.View style={[styles.dot, dotWidth, bgColor]} key={item.key} />
+      );
     })}
   </View>
 );
+
+const TheDot = ({scrollX}) => {
+  const dotMoving = useAnimatedStyle(() => {
+    const animatedIndicator = interpolate(
+      scrollX.value,
+      [0, 393, 780],
+      [0, 13, 26],
+      Extrapolate.CLAMP,
+    );
+
+    return {transform: [{translateX: animatedIndicator}]};
+  });
+
+  const bgColor = useAnimatedStyle(() => {
+    const animatedIndicator = interpolateColor(
+      scrollX.value,
+      [0, 393, 780],
+      [COLORS.blue1, COLORS.white1, COLORS.blue3],
+    );
+    return {
+      backgroundColor: animatedIndicator,
+    };
+  });
+
+  return (
+    <View style={{position: 'absolute', width: '100%'}}>
+      <Animated.View style={[dotMoving, bgColor, styles.dot__moving]} />
+    </View>
+  );
+};
 
 const MainScreen = ({navigation}) => {
   const slidesRef = useRef();
@@ -59,7 +103,7 @@ const MainScreen = ({navigation}) => {
   ];
 
   useEffect(() => {
-    slidesRef.current.scrollToIndex({index: 1, animated: false});
+    slidesRef.current?.scrollToIndex({index: 1, animated: false});
   }, []);
 
   const scrollFailed = () => {
@@ -83,6 +127,11 @@ const MainScreen = ({navigation}) => {
 
   return (
     <>
+      <StatusBar
+        backgroundColor="transparent"
+        translucent
+        barStyle="dark-content"
+      />
       <ReanimatedFlatList
         ref={slidesRef}
         bounces={false}
@@ -101,6 +150,7 @@ const MainScreen = ({navigation}) => {
 
       <View style={styles.indicator__container}>
         <PageIndicator data={SCREEN} scrollX={scrollX} />
+        <TheDot data={SCREEN} scrollX={scrollX} />
       </View>
     </>
   );
@@ -114,13 +164,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
     alignSelf: 'center',
-    top: SIZES.height / 12,
+    top: Platform.OS === 'ios' ? SIZES.height / 10 : SIZES.height / 12.5,
   },
 
   dot: {
     height: 6,
     borderRadius: 10,
-    backgroundColor: COLORS.white1,
+    marginHorizontal: 3.5,
+  },
+
+  dot__moving: {
+    height: 7,
+    width: 7,
+    borderRadius: 10,
     marginHorizontal: 3.5,
   },
 });
