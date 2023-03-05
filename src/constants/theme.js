@@ -16,6 +16,8 @@ export const COLORS = {
   black3: '#010914',
   black4: '#000F14',
   purple: '#6E5599',
+  darkgrey: '#656565',
+  lightgrey: '#E4E4E4',
 };
 
 export const SIZES = {

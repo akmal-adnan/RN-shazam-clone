@@ -9,11 +9,18 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {FONTS, COLORS, ChartsByCountry, IMAGES, SIZES} from '../constants';
+import {
+  FONTS,
+  COLORS,
+  ChartsByCountry,
+  IMAGES,
+  SIZES,
+  CountryList,
+} from '../constants';
 
-const Charts = () => {
+const Charts = ({navigation}) => {
   const insets = useSafeAreaInsets();
-  const [data, setData] = useState(ChartsByCountry.slice(0, 10));
+  const [data] = useState(CountryList);
 
   const renderHeader = () => (
     <View
@@ -29,12 +36,19 @@ const Charts = () => {
   const renderItem = ({item}) => (
     <View key={item.key} style={[styles.charts__group, styles.shadow2]}>
       <View style={styles.charts__text}>
-        <Text style={styles.charts__title}>Malaysia Chart</Text>
-        <Text style={styles.see__all}>See all</Text>
+        <Text style={styles.charts__title}>{item?.country} Chart</Text>
+
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() =>
+            navigation.push('SubCharts', {country: item?.country})
+          }>
+          <Text style={styles.see__all}>See all</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={{flexDirection: 'row', paddingBottom: 20}}>
-        {ChartsByCountry?.slice(3, 6).map(song => (
+        {ChartsByCountry?.slice(0, 3).map(song => (
           <View key={song.key} style={{marginRight: 10}}>
             <Image
               source={{uri: `${song?.images?.coverart}`}}
