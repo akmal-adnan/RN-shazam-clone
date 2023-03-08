@@ -3,5 +3,6 @@ import Charts from './Charts';
 import Library from './Library';
 import SubCharts from './SubCharts';
 import MainScreen from './MainScreen';
+import SongDetails from './SongDetails';
 
-export {MainScreen, Home, Charts, Library, SubCharts};
+export {MainScreen, Home, Charts, Library, SubCharts, SongDetails};

@@ -9,18 +9,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {
-  FONTS,
-  COLORS,
-  ChartsByCountry,
-  IMAGES,
-  SIZES,
-  CountryList,
-} from '../constants';
+import {FONTS, COLORS, IMAGES, SIZES, DATA} from '../constants';
 
 const Charts = ({navigation}) => {
   const insets = useSafeAreaInsets();
-  const [data] = useState(CountryList);
+  const [data] = useState(DATA.CountryList);
 
   const renderHeader = () => (
     <View
@@ -48,7 +41,7 @@ const Charts = ({navigation}) => {
       </View>
 
       <View style={{flexDirection: 'row', paddingBottom: 20}}>
-        {ChartsByCountry?.slice(0, 3).map(song => (
+        {DATA.ChartsByCountry?.slice(0, 3).map(song => (
           <View key={song.key} style={{marginRight: 10}}>
             <Image
               source={{uri: `${song?.images?.coverart}`}}

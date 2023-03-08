@@ -5,76 +5,21 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
-  Image,
   ImageBackground,
-  Platform,
 } from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Material from 'react-native-vector-icons/MaterialIcons';
 import Animated, {
   useSharedValue,
-  useAnimatedStyle,
-  interpolate,
-  Extrapolate,
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
-import {FONTS, COLORS, SIZES, ChartsByCountry, IMAGES} from '../constants';
+import {FONTS, COLORS, SIZES, DATA, SVG} from '../constants';
+import {Header} from '../components';
 
 const ReanimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const SubCharts = ({navigation, route}) => {
   const scrollY = useSharedValue(0);
-
-  const insets = useSafeAreaInsets();
   const {country} = route.params;
-
-  const AnimatedShadow = useAnimatedStyle(() => {
-    const shadowOpacity = interpolate(
-      scrollY.value,
-      [0, 40],
-      [0, 0.18],
-      Extrapolate.CLAMP,
-    );
-
-    const elevation = interpolate(
-      scrollY.value,
-      [0, 40],
-      [0, 5],
-      Extrapolate.CLAMP,
-    );
-
-    return Platform.OS === 'ios'
-      ? {
-          shadowColor: '#000000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity,
-          shadowRadius: 2,
-        }
-      : {
-          elevation,
-        };
-  });
-
-  const renderHeader = () => (
-    <Animated.View
-      style={[
-        AnimatedShadow,
-        styles.header__container,
-        {paddingTop: insets.top},
-      ]}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={30} color={COLORS.darkgrey} />
-        </TouchableOpacity>
-        <Text style={styles.header__text}>{country} Chart</Text>
-      </View>
-      <Material name="playlist-add-check" size={30} color={COLORS.darkgrey} />
-    </Animated.View>
-  );
 
   const renderButton = () => (
     <View style={{paddingVertical: 15, alignItems: 'center'}}>
@@ -92,7 +37,10 @@ const SubCharts = ({navigation, route}) => {
   );
 
   const renderItem = ({item, index}) => (
-    <View
+    <TouchableOpacity
+      onPress={() => navigation.push('SongDetails')}
+      onLongPress={() => console.log('Multiselect action')}
+      activeOpacity={0.7}
       style={{
         flexDirection: 'row',
         paddingVertical: 16,
@@ -100,7 +48,7 @@ const SubCharts = ({navigation, route}) => {
         position: 'relative',
       }}>
       <ImageBackground
-        source={{uri: `${item?.images?.coverart}`}}
+        source={{uri: item?.images?.coverart}}
         resizeMode="contain"
         imageStyle={{borderRadius: 5}}
         style={styles.song__cover}>
@@ -121,7 +69,7 @@ const SubCharts = ({navigation, route}) => {
         <TouchableOpacity
           activeOpacity={0.7}
           style={{
-            backgroundColor: 'rgba(0,0,0,0.55)',
+            backgroundColor: 'rgba(0,0,0,0.6)',
             justifyContent: 'center',
             alignSelf: 'center',
             borderRadius: 100,
@@ -155,21 +103,18 @@ const SubCharts = ({navigation, route}) => {
             justifyContent: 'space-between',
           }}>
           <TouchableOpacity
-            activeOpacity={0.5}
+            activeOpacity={0.7}
             style={{
-              backgroundColor: COLORS.black1,
-              borderRadius: 50,
-              alignItems: 'center',
-              width: 60,
+              paddingHorizontal: 9,
+              paddingVertical: 5,
+              borderRadius: 20,
+              backgroundColor: COLORS.black6,
+              bottom: 0,
             }}>
-            <Image
-              source={IMAGES.AppleMusic}
-              resizeMode="contain"
-              style={{width: 45, height: 23}}
-            />
+            <SVG.AppleMusicSVG width={50} height={15} fill={COLORS.white1} />
           </TouchableOpacity>
 
-          <TouchableOpacity activeOpacity={0.7} style={{marginRight: -5}}>
+          <TouchableOpacity activeOpacity={0.5} style={{marginRight: -5}}>
             <Ionicons name="ellipsis-vertical" size={24} color={COLORS.icon1} />
           </TouchableOpacity>
         </View>
@@ -185,19 +130,19 @@ const SubCharts = ({navigation, route}) => {
           }}
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
     <View style={styles.main__container}>
-      {renderHeader()}
+      <Header navigation={navigation} country={country} scrollY={scrollY} />
 
       <ReanimatedFlatList
         ListHeaderComponent={renderButton}
         contentContainerStyle={{paddingBottom: 50}}
         bounces={false}
         scrollEventThrottle={16}
-        data={ChartsByCountry.slice(0, 10)}
+        data={DATA.ChartsByCountry.slice(0, 10)}
         renderItem={renderItem}
         keyExtractor={item => item.key}
         onScroll={useAnimatedScrollHandler(event => {

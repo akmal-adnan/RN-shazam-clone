@@ -1,6 +1,13 @@
 import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
-import {Home, Charts, SubCharts, Library, MainScreen} from '../screens';
+import {
+  Home,
+  Charts,
+  SubCharts,
+  Library,
+  MainScreen,
+  SongDetails,
+} from '../screens';
 
 const Stack = createStackNavigator();
 const screenOptionStyle = {
@@ -28,6 +35,11 @@ const RootStack = () => (
     <Stack.Screen
       name="SubCharts"
       component={SubCharts}
+      options={transitionOptions}
+    />
+    <Stack.Screen
+      name="SongDetails"
+      component={SongDetails}
       options={transitionOptions}
     />
   </Stack.Navigator>
