@@ -1,12 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
-  ScrollView,
-  FlatList,
   StatusBar,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -21,6 +19,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
 import {COLORS, FONTS, DATA, SIZES, SVG} from '../constants';
+import {ApplePlayButton, TrackRelatedSongs, TrackTopSongs} from '../components';
 
 const SongDetails = ({navigation}) => {
   const insets = useSafeAreaInsets();
@@ -28,8 +27,13 @@ const SongDetails = ({navigation}) => {
 
   const [data] = useState(DATA.TrackDetails[0]);
 
-  const numberWithComma = x =>
-    x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const totalShazams = useMemo(
+    () =>
+      DATA?.TotalShazams?.total
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+    [],
+  );
 
   const animateHeader = useAnimatedStyle(() => {
     const opacity = interpolate(
@@ -112,7 +116,7 @@ const SongDetails = ({navigation}) => {
 
   const renderItemTop = () => (
     <LinearGradient
-      colors={['rgba(0,0,0, 0.4)', 'rgba(0,0,0, 0.98)']}
+      colors={['rgba(0,0,0, 0.3)', 'rgba(0,0,0, 0.98)']}
       style={{
         height: SIZES.height / 1.45,
         justifyContent: 'space-between',
@@ -136,7 +140,7 @@ const SongDetails = ({navigation}) => {
           }}>
           <SVG.ShazamLogoSVG width={15} height={15} fill={COLORS.icon2} />
           <Text style={{color: COLORS.darkgrey, ...FONTS.p5, paddingLeft: 5}}>
-            {numberWithComma(data?.key)} Shazams
+            {totalShazams} Shazams
           </Text>
         </View>
       </View>
@@ -156,156 +160,6 @@ const SongDetails = ({navigation}) => {
         <Ionicons name="play" size={28} color={COLORS.white1} />
       </TouchableOpacity>
     </LinearGradient>
-  );
-
-  const renderAppleButton = () => (
-    <View style={{backgroundColor: COLORS.black1, paddingVertical: 30}}>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        style={{
-          flexDirection: 'row',
-          alignSelf: 'center',
-          backgroundColor: COLORS.blue1,
-          paddingVertical: 5,
-          paddingHorizontal: 7,
-          borderRadius: 50,
-        }}>
-        <View
-          style={{
-            backgroundColor: COLORS.peach,
-            padding: 8,
-            borderRadius: 100,
-            borderWidth: 1,
-            borderColor: COLORS.white1,
-            ...styles.shadow,
-          }}>
-          <Ionicons
-            name="musical-notes-sharp"
-            size={20}
-            color={COLORS.white1}
-          />
-        </View>
-        <Text
-          style={{
-            ...FONTS.h4,
-            color: COLORS.white1,
-            alignSelf: 'center',
-            paddingHorizontal: 10,
-          }}>
-          PLAY FULL SONG
-        </Text>
-      </TouchableOpacity>
-
-      <Text
-        style={{
-          color: COLORS.white1,
-          ...FONTS.m4,
-          alignSelf: 'center',
-          paddingTop: 8,
-        }}>
-        Get up to 1 month free of Apple Music
-      </Text>
-    </View>
-  );
-
-  const renderTopSongs = () => (
-    <View style={{backgroundColor: COLORS.black1, paddingTop: 25}}>
-      <Text
-        style={{
-          color: COLORS.white1,
-          ...FONTS.h3,
-          marginBottom: 30,
-          paddingHorizontal: 16,
-        }}>
-        TOP SONGS
-      </Text>
-      <ScrollView horizontal bounces={false}>
-        <View
-          style={{
-            flexWrap: 'wrap',
-            height: SIZES.height / 1.8,
-            paddingHorizontal: 16,
-            rowGap: 35,
-            columnGap: 15,
-          }}>
-          {DATA?.FeaturedSongs?.data[0].views['top-songs'].data.map(item => (
-            <View
-              key={item.id}
-              style={{
-                flexDirection: 'row',
-                width: SIZES.width / 1.16,
-              }}>
-              <ImageBackground
-                source={{
-                  uri: item.attributes.artwork.url
-                    .replace('{w}', 300)
-                    .replace('{h}', 300),
-                }}
-                resizeMode="contain"
-                imageStyle={{
-                  borderRadius: 5,
-                  borderWidth: 0.5,
-                  borderColor: COLORS.darkgrey,
-                }}
-                style={{
-                  width: SIZES.width / 3.3,
-                  height: SIZES.width / 3.3,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  style={{
-                    backgroundColor: 'rgba(0,0,0,0.6)',
-                    borderRadius: 100,
-                    padding: 15,
-                  }}>
-                  <Ionicons name="play" size={28} color={COLORS.white1} />
-                </TouchableOpacity>
-              </ImageBackground>
-
-              <View style={{marginLeft: 16, gap: 5}}>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    ...FONTS.h3,
-                    color: COLORS.white1,
-                    width: SIZES.width / 2.5,
-                  }}>
-                  {item.attributes.name}
-                </Text>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    ...FONTS.m3,
-                    color: COLORS.white1,
-                    width: SIZES.width / 2.5,
-                  }}>
-                  {item.attributes.artistName}
-                </Text>
-
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  style={{
-                    paddingHorizontal: 9,
-                    paddingVertical: 5,
-                    borderRadius: 20,
-                    position: 'absolute',
-                    backgroundColor: COLORS.black6,
-                    bottom: 0,
-                  }}>
-                  <SVG.AppleMusicSVG
-                    width={50}
-                    height={15}
-                    fill={COLORS.white1}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          ))}
-        </View>
-      </ScrollView>
-    </View>
   );
 
   const renderVideo = () => (
@@ -361,92 +215,6 @@ const SongDetails = ({navigation}) => {
           {DATA.TrackYoutube[0].caption}
         </Text>
       </View>
-    </View>
-  );
-
-  const renderRelatedSongs = () => (
-    <View style={{backgroundColor: COLORS.black1, paddingVertical: 35}}>
-      <Text
-        style={{
-          color: COLORS.white1,
-          ...FONTS.h3,
-          paddingBottom: 20,
-          paddingHorizontal: 16,
-        }}>
-        YOU MAY ALSO LIKE
-      </Text>
-
-      <FlatList
-        horizontal
-        bounces={false}
-        data={DATA.TrackRelated.slice(0, 10)}
-        renderItem={renderList}
-        keyExtractor={item => item.key}
-      />
-    </View>
-  );
-
-  const renderList = ({item, index}) => (
-    <View style={{paddingLeft: index === 0 ? 16 : 0, paddingRight: 16}}>
-      <ImageBackground
-        source={{
-          uri: item?.images?.coverart,
-        }}
-        resizeMode="contain"
-        imageStyle={{
-          borderRadius: 5,
-          borderWidth: 0.5,
-          borderColor: COLORS.darkgrey,
-        }}
-        style={{
-          width: SIZES.width / 2.55,
-          height: SIZES.width / 2.55,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={{
-            backgroundColor: 'rgba(0,0,0,0.6)',
-            borderRadius: 100,
-            padding: 15,
-          }}>
-          <Ionicons name="play" size={28} color={COLORS.white1} />
-        </TouchableOpacity>
-      </ImageBackground>
-      <Text
-        numberOfLines={1}
-        style={{
-          ...FONTS.m3,
-          color: COLORS.white1,
-          width: 100,
-          paddingTop: 10,
-          paddingBottom: 5,
-        }}>
-        {item.title}
-      </Text>
-      <Text
-        numberOfLines={1}
-        style={{
-          ...FONTS.p4,
-          color: COLORS.white1,
-          width: 100,
-          paddingBottom: 20,
-        }}>
-        {item.subtitle}
-      </Text>
-
-      <TouchableOpacity
-        activeOpacity={0.7}
-        style={{
-          paddingHorizontal: 9,
-          paddingVertical: 5,
-          borderRadius: 20,
-          backgroundColor: COLORS.black6,
-          alignSelf: 'flex-start',
-        }}>
-        <SVG.AppleMusicSVG width={50} height={15} fill={COLORS.white1} />
-      </TouchableOpacity>
     </View>
   );
 
@@ -544,10 +312,10 @@ const SongDetails = ({navigation}) => {
           scrollY.value = event.contentOffset.y;
         })}>
         {renderItemTop()}
-        {renderAppleButton()}
-        {renderTopSongs()}
+        <ApplePlayButton Bgcolor={COLORS.black1} />
+        <TrackTopSongs />
         {renderVideo()}
-        {renderRelatedSongs()}
+        <TrackRelatedSongs />
         {renderFooter()}
         {shareButton()}
       </Animated.ScrollView>
@@ -572,6 +340,7 @@ const styles = StyleSheet.create({
 
   header__text: {
     ...FONTS.m5,
+    fontSize: 15,
     paddingLeft: 3,
     color: COLORS.white1,
   },

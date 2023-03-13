@@ -21,6 +21,7 @@ export const COLORS = {
   peach: '#FA425A',
   darkgrey: '#656565',
   lightgrey: '#E4E4E4',
+  orange: '#FF9900',
 };
 
 export const SIZES = {

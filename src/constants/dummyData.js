@@ -6816,6 +6816,12 @@ export const TrackYoutube = [
   },
 ];
 
+export const TotalShazams = {
+  id: '633815114',
+  total: 2928282,
+  type: 'tag',
+};
+
 const DATA = {
   ChartsByCountry,
   CountryList,
@@ -6823,6 +6829,7 @@ const DATA = {
   TrackRelated,
   TrackYoutube,
   FeaturedSongs,
+  TotalShazams,
 };
 
 export default DATA;

@@ -13,6 +13,7 @@ import Home from './Home';
 import Charts from './Charts';
 import Library from './Library';
 import {COLORS, SIZES} from '../constants';
+import FloatButton from '../components/FloatButton';
 
 const ReanimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -152,6 +153,8 @@ const MainScreen = ({navigation}) => {
         <PageIndicator data={SCREEN} scrollX={scrollX} />
         <TheDot data={SCREEN} scrollX={scrollX} />
       </View>
+
+      <FloatButton navigation={navigation} />
     </>
   );
 };

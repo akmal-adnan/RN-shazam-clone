@@ -8,6 +8,8 @@ const ShazamLogo2 = require('../assets/images/shazam-translucent.png');
 const WorldMap = require('../assets/images/world-map.jpg');
 const ChartsIcon = require('../assets/images/charts.png');
 
+const SoundBar = require('../assets/animations/icon_equalizer.json');
+
 export const IMAGES = {
   AppleMusic,
   ShazamLogo,
@@ -22,4 +24,8 @@ export const SVG = {
   ShazamLogo2SVG,
 };
 
-export default {IMAGES, SVG};
+export const LOTTIE = {
+  SoundBar,
+};
+
+export default {IMAGES, SVG, LOTTIE};

@@ -41,8 +41,12 @@ const Charts = ({navigation}) => {
       </View>
 
       <View style={{flexDirection: 'row', paddingBottom: 20}}>
-        {DATA.ChartsByCountry?.slice(0, 3).map(song => (
-          <View key={song.key} style={{marginRight: 10}}>
+        {DATA.ChartsByCountry?.slice(0, 3).map((song, index) => (
+          <TouchableOpacity
+            onPress={() => navigation.push('SongDetails')}
+            activeOpacity={0.7}
+            key={song.key}
+            style={{marginRight: index < 2 ? 10 : 0}}>
             <Image
               source={{uri: `${song?.images?.coverart}`}}
               resizeMode="contain"
@@ -54,7 +58,7 @@ const Charts = ({navigation}) => {
             <Text numberOfLines={1} style={styles.song__subtitle}>
               {song.subtitle}
             </Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
     </View>

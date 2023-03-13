@@ -7,6 +7,7 @@ import {
   Library,
   MainScreen,
   SongDetails,
+  MusicPlayer,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -41,6 +42,12 @@ const RootStack = () => (
       name="SongDetails"
       component={SongDetails}
       options={transitionOptions}
+    />
+
+    <Stack.Screen
+      name="MusicPlayer"
+      component={MusicPlayer}
+      options={{...TransitionPresets.ModalSlideFromBottomIOS}}
     />
   </Stack.Navigator>
 );
