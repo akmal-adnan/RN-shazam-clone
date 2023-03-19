@@ -58,17 +58,17 @@ export const FONTS = {
   h4: {fontFamily: 'NeueMontreal-Bold', fontSize: SIZES.h4, lineHeight: 22},
   h5: {fontFamily: 'NeueMontreal-Bold', fontSize: SIZES.h5, lineHeight: 22},
 
-  p1: {fontFamily: 'NeueMontreal-Regular', fontSize: SIZES.body1, lineHeight: 36},
-  p2: {fontFamily: 'NeueMontreal-Regular', fontSize: SIZES.body2, lineHeight: 30},
-  p3: {fontFamily: 'NeueMontreal-Regular', fontSize: SIZES.body3, lineHeight: 22},
-  p4: {fontFamily: 'NeueMontreal-Regular', fontSize: SIZES.body4, lineHeight: 22},
-  p5: {fontFamily: 'NeueMontreal-Regular', fontSize: SIZES.body5, lineHeight: 22},
-
   m1: {fontFamily: 'NeueMontreal-Medium', fontSize: SIZES.body1, lineHeight: 36},
   m2: {fontFamily: 'NeueMontreal-Medium', fontSize: SIZES.body2, lineHeight: 30},
   m3: {fontFamily: 'NeueMontreal-Medium', fontSize: SIZES.body3, lineHeight: 22},
   m4: {fontFamily: 'NeueMontreal-Medium', fontSize: SIZES.body4, lineHeight: 22},
   m5: {fontFamily: 'NeueMontreal-Medium', fontSize: SIZES.body5, lineHeight: 22},
+
+  p1: {fontFamily: 'NeueMontreal-Regular', fontSize: SIZES.body1, lineHeight: 36},
+  p2: {fontFamily: 'NeueMontreal-Regular', fontSize: SIZES.body2, lineHeight: 30},
+  p3: {fontFamily: 'NeueMontreal-Regular', fontSize: SIZES.body3, lineHeight: 22},
+  p4: {fontFamily: 'NeueMontreal-Regular', fontSize: SIZES.body4, lineHeight: 22},
+  p5: {fontFamily: 'NeueMontreal-Regular', fontSize: SIZES.body5, lineHeight: 22},
 
   l1: {fontFamily: 'NeueMontreal-Light', fontSize: SIZES.body1, lineHeight: 36},
   l2: {fontFamily: 'NeueMontreal-Light', fontSize: SIZES.body2, lineHeight: 30},

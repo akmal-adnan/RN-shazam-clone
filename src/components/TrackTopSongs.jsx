@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,48 +10,62 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {COLORS, DATA, FONTS, SIZES, SVG} from '../constants';
 
+function Loading() {
+  return (
+    <View>
+      <Text>Loading...</Text>
+    </View>
+  );
+}
+
 const TrackTopSongs = () => (
-  <View style={{backgroundColor: COLORS.black1, paddingTop: 25}}>
+  <View style={{backgroundColor: COLORS.black1, paddingTop: 20}}>
     <Text style={styles.top__title}>TOP SONGS</Text>
 
-    <ScrollView horizontal bounces={false}>
-      <View style={styles.list__container}>
-        {DATA?.FeaturedSongs?.data[0]?.views['top-songs'].data.map(item => (
-          <View key={item.id} style={styles.song__container}>
-            <ImageBackground
-              source={{
-                uri: item.attributes.artwork.url
-                  .replace('{w}', 300)
-                  .replace('{h}', 300),
-              }}
-              resizeMode="contain"
-              imageStyle={styles.image__style}
-              style={styles.image__container}>
-              <TouchableOpacity activeOpacity={0.7} style={styles.play__button}>
-                <Ionicons name="play" size={28} color={COLORS.white1} />
-              </TouchableOpacity>
-            </ImageBackground>
+    <Suspense fallback={<Loading />}>
+      <ScrollView horizontal bounces={false}>
+        <View style={styles.list__container}>
+          {DATA?.FeaturedSongs?.data[0]?.views['top-songs'].data.map(item => (
+            <View key={item.id} style={styles.song__container}>
+              <ImageBackground
+                source={{
+                  uri: item.attributes.artwork.url
+                    .replace('{w}', 300)
+                    .replace('{h}', 300),
+                }}
+                resizeMode="contain"
+                imageStyle={styles.image__style}
+                style={styles.image__container}>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  style={styles.play__button}>
+                  <Ionicons name="play" size={28} color={COLORS.white1} />
+                </TouchableOpacity>
+              </ImageBackground>
 
-            <View style={{marginLeft: 16, gap: 5}}>
-              <Text numberOfLines={1} style={styles.song__title}>
-                {item.attributes.name}
-              </Text>
-              <Text numberOfLines={1} style={styles.song__artist}>
-                {item.attributes.artistName}
-              </Text>
+              <View style={{marginLeft: 16, gap: 5}}>
+                <Text numberOfLines={1} style={styles.song__title}>
+                  {item.attributes.name}
+                </Text>
+                <Text numberOfLines={1} style={styles.song__artist}>
+                  {item.attributes.artistName}
+                </Text>
 
-              <TouchableOpacity activeOpacity={0.7} style={styles.apple_button}>
-                <SVG.AppleMusicSVG
-                  width={50}
-                  height={15}
-                  fill={COLORS.white1}
-                />
-              </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  style={styles.apple_button}>
+                  <SVG.AppleMusicSVG
+                    width={50}
+                    height={15}
+                    fill={COLORS.white1}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        ))}
-      </View>
-    </ScrollView>
+          ))}
+        </View>
+      </ScrollView>
+    </Suspense>
   </View>
 );
 
@@ -61,7 +75,7 @@ const styles = StyleSheet.create({
   top__title: {
     color: COLORS.white1,
     ...FONTS.h3,
-    marginBottom: 30,
+    marginBottom: 25,
     paddingHorizontal: 16,
   },
 

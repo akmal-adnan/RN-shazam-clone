@@ -38,7 +38,7 @@ const SongDetails = ({navigation}) => {
   const animateHeader = useAnimatedStyle(() => {
     const opacity = interpolate(
       scrollY.value,
-      [250, 413],
+      [280, 440],
       [0, 1],
       Extrapolate.CLAMP,
     );
@@ -52,7 +52,7 @@ const SongDetails = ({navigation}) => {
   const titileOpacity = useAnimatedStyle(() => {
     const opacity = interpolate(
       scrollY.value,
-      [405, 418],
+      [436, 460],
       [0, 1],
       Extrapolate.CLAMP,
     );
@@ -116,49 +116,56 @@ const SongDetails = ({navigation}) => {
 
   const renderItemTop = () => (
     <LinearGradient
-      colors={['rgba(0,0,0, 0.3)', 'rgba(0,0,0, 0.98)']}
+      colors={[
+        'rgba(0,0,0, 0.2)',
+        'rgba(0,0,0, 0.3)',
+        'rgba(0,0,0, 0.65)',
+        'rgba(0,0,0, 1)',
+      ]}
       style={{
-        height: SIZES.height / 1.45,
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        alignItems: 'flex-end',
+        height: SIZES.height / 1.13,
+        justifyContent: 'flex-end',
         paddingHorizontal: 16,
       }}>
-      <View>
-        <Text style={{color: COLORS.white1, ...FONTS.h1, paddingBottom: 5}}>
-          {data?.title}
-        </Text>
-        <Text style={{color: COLORS.icon2, ...FONTS.p4, paddingBottom: 5}}>
-          {data?.subtitle}
-        </Text>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingBottom: 10,
-          }}>
-          <SVG.ShazamLogoSVG width={15} height={15} fill={COLORS.icon2} />
-          <Text style={{color: COLORS.darkgrey, ...FONTS.p5, paddingLeft: 5}}>
-            {totalShazams} Shazams
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View>
+          <Text style={{color: COLORS.white1, ...FONTS.h1, paddingBottom: 5}}>
+            {data?.title}
           </Text>
+          <Text style={{color: COLORS.icon2, ...FONTS.p4, paddingBottom: 5}}>
+            {data?.subtitle}
+          </Text>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingBottom: 10,
+            }}>
+            <SVG.ShazamLogoSVG width={15} height={15} fill={COLORS.icon2} />
+            <Text style={{color: COLORS.darkgrey, ...FONTS.p5, paddingLeft: 5}}>
+              {totalShazams} Shazams
+            </Text>
+          </View>
         </View>
+
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={{
+            backgroundColor: 'rgba(212,212,212,0.13)',
+            borderRadius: 100,
+            width: 50,
+            height: 50,
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingLeft: 3,
+            marginBottom: 55,
+          }}>
+          <Ionicons name="play" size={28} color={COLORS.white1} />
+        </TouchableOpacity>
       </View>
 
-      <TouchableOpacity
-        activeOpacity={0.7}
-        style={{
-          backgroundColor: 'rgba(212,212,212,0.13)',
-          borderRadius: 100,
-          width: 50,
-          height: 50,
-          justifyContent: 'center',
-          alignItems: 'center',
-          paddingLeft: 3,
-          marginBottom: 55,
-        }}>
-        <Ionicons name="play" size={28} color={COLORS.white1} />
-      </TouchableOpacity>
+      <ApplePlayButton />
     </LinearGradient>
   );
 
@@ -286,40 +293,52 @@ const SongDetails = ({navigation}) => {
   );
 
   return (
-    <ImageBackground
-      source={{
-        uri: data?.images?.background,
-      }}
-      resizeMode="cover"
-      imageStyle={{
-        width: SIZES.width,
-        height: SIZES.height / 1.5,
-      }}
-      style={{backgroundColor: COLORS.black1}}>
-      {/* Top Header */}
-      {renderHeader()}
-
+    <>
       <StatusBar
         backgroundColor="transparent"
         translucent
         barStyle="light-content"
       />
+      <ImageBackground
+        source={{
+          uri: data?.images?.background,
+        }}
+        resizeMode="cover"
+        imageStyle={{
+          width: SIZES.width,
+          height: SIZES.height / 1.7,
+        }}
+        style={{backgroundColor: COLORS.black1}}>
+        {/* Top Header */}
+        {renderHeader()}
 
-      <Animated.ScrollView
-        bounces={false}
-        scrollEventThrottle={16}
-        onScroll={useAnimatedScrollHandler(event => {
-          scrollY.value = event.contentOffset.y;
-        })}>
-        {renderItemTop()}
-        <ApplePlayButton Bgcolor={COLORS.black1} />
-        <TrackTopSongs />
-        {renderVideo()}
-        <TrackRelatedSongs />
-        {renderFooter()}
-        {shareButton()}
-      </Animated.ScrollView>
-    </ImageBackground>
+        <LinearGradient
+          colors={[
+            'rgba(0,0,0, 0)',
+            'rgba(0,0,0, 0)',
+            'rgba(0,0,0, 0.95)',
+            'rgba(0,0,0, 1)',
+            'rgba(0,0,0, 1)',
+          ]}
+          style={styles.linear__bottom}
+        />
+
+        <Animated.ScrollView
+          bounces={false}
+          scrollEventThrottle={16}
+          onScroll={useAnimatedScrollHandler(event => {
+            scrollY.value = event.contentOffset.y;
+          })}>
+          {renderItemTop()}
+
+          <TrackTopSongs />
+          {renderVideo()}
+          <TrackRelatedSongs />
+          {renderFooter()}
+          {shareButton()}
+        </Animated.ScrollView>
+      </ImageBackground>
+    </>
   );
 };
 
@@ -355,5 +374,12 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
 
     elevation: 5,
+  },
+
+  linear__bottom: {
+    position: 'absolute',
+    width: '100%',
+    height: SIZES.height / 1.22,
+    bottom: 0,
   },
 });

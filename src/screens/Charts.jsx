@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   },
 
   header__text: {
-    ...FONTS.m3,
+    ...FONTS.h3,
     paddingBottom: 32,
     paddingTop: 5,
     color: COLORS.black1,
