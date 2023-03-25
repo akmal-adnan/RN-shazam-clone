@@ -1,11 +1,4 @@
-import {
-  View,
-  FlatList,
-  StatusBar,
-  StyleSheet,
-  ImageBackground,
-  TouchableOpacity,
-} from 'react-native';
+import {FlatList, StatusBar, StyleSheet, ImageBackground} from 'react-native';
 import React from 'react';
 import Animated, {
   useSharedValue,
@@ -15,9 +8,14 @@ import Animated, {
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
-import Entypo from 'react-native-vector-icons/Entypo';
 import {COLORS, DATA, SIZES} from '../constants';
-import {ApplePlayButton, Header2, PlayHeader, PlayRelated} from '../components';
+import {
+  ApplePlayButton,
+  Header2,
+  PlayHeader,
+  PlayRelated,
+  PlayerButton,
+} from '../components';
 
 const ReanimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -29,7 +27,7 @@ const MusicPlayer = ({navigation}) => {
     const translateY = interpolate(
       scrollY.value,
       [0, 500],
-      [0, 125],
+      [0, 140],
       Extrapolate.CLAMP,
     );
 
@@ -50,23 +48,7 @@ const MusicPlayer = ({navigation}) => {
   const renderPlayer = () => (
     <LinearGradient colors={styles.linear__grad1}>
       <Animated.View style={[TranslateY, styles.player__container]}>
-        <View style={styles.player__button}>
-          <TouchableOpacity>
-            <Entypo
-              name="controller-jump-to-start"
-              size={60}
-              color={COLORS.orange}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.play__button}>
-            <Entypo name="controller-play" size={40} color={COLORS.white1} />
-          </TouchableOpacity>
-
-          <TouchableOpacity>
-            <Entypo name="controller-next" size={60} color={COLORS.orange} />
-          </TouchableOpacity>
-        </View>
+        <PlayerButton />
 
         <Animated.View style={[AnimatedOpacity]}>
           <ApplePlayButton />
@@ -169,7 +151,7 @@ const styles = StyleSheet.create({
 
   player__container: {
     alignSelf: 'center',
-    paddingTop: SIZES.height / 1.45,
+    paddingTop: SIZES.height / 1.485,
     paddingBottom: 25,
   },
 

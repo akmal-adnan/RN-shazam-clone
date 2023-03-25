@@ -4,9 +4,13 @@ import Animated, {
   useAnimatedStyle,
   interpolateColor,
 } from 'react-native-reanimated';
+import {Slider} from '@miblanchard/react-native-slider';
+import TrackPlayer, {useProgress} from 'react-native-track-player';
 import {COLORS, DATA, FONTS} from '../constants';
 
 const PlayHeader = ({AxisY}) => {
+  const progress = useProgress();
+
   const BorderColor = useAnimatedStyle(() => {
     const color = interpolateColor(
       AxisY.value,
@@ -19,11 +23,30 @@ const PlayHeader = ({AxisY}) => {
 
   return (
     <View>
-      <Text style={styles.player__timestamp}>02:55</Text>
-      <View style={{position: 'relative'}}>
-        <View style={styles.sound__bar2} />
-        <View style={styles.sound__bar1} />
-      </View>
+      <Text style={styles.player__timestamp}>
+        {new Date((progress.duration - progress.position) * 1000)
+          .toISOString()
+          .substring(14, 19)}
+      </Text>
+
+      {/* Slider control */}
+      <Slider
+        value={progress.position}
+        maximumValue={progress.duration}
+        onSlidingComplete={async value => {
+          await TrackPlayer.seekTo(Number(value));
+        }}
+        containerStyle={{backgroundColor: 'rgba(0,0,0, 0.6)', height: 15}}
+        animateTransitions
+        animationType="timing"
+        minimumTrackTintColor={COLORS.orange}
+        thumbStyle={{
+          backgroundColor: COLORS.orange,
+          height: 15,
+          borderRadius: 0,
+        }}
+        trackStyle={{backgroundColor: 'rgba(255,153,0,0.5)', height: 15}}
+      />
 
       <Animated.View style={[BorderColor, styles.header__container]}>
         <Text style={{...FONTS.h4, color: COLORS.orange}}>PLAYING</Text>
@@ -43,7 +66,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'flex-end',
     paddingHorizontal: 6,
-    top: -35,
+    top: -23,
     ...FONTS.m5,
   },
 

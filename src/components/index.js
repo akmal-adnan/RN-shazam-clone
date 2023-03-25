@@ -5,6 +5,7 @@ import PlayHeader from './PlayHeader';
 import Header2 from './Header2';
 import TrackTopSongs from './TrackTopSongs';
 import TrackRelatedSongs from './TrackRelatedSongs';
+import PlayerButton from './PlayerButton';
 
 // eslint-disable-next-line import/prefer-default-export
 export {
@@ -15,4 +16,5 @@ export {
   Header2,
   TrackTopSongs,
   TrackRelatedSongs,
+  PlayerButton,
 };

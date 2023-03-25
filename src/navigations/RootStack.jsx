@@ -8,6 +8,7 @@ import {
   MainScreen,
   SongDetails,
   MusicPlayer,
+  SplashScreen,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -19,14 +20,34 @@ const transitionOptions = {
   ...TransitionPresets.SlideFromRightIOS,
 };
 
+const fadeTrandisiton = () => ({
+  transitionSpec: {
+    open: {animation: 'timing', config: {duration: 200}},
+    close: {animation: 'timing', config: {duration: 200}},
+  },
+  cardStyleInterpolator: ({current: {progress}}) => ({
+    cardStyle: {
+      opacity: progress,
+    },
+  }),
+});
+
 const RootStack = () => (
   <Stack.Navigator screenOptions={screenOptionStyle}>
     <Stack.Screen
+      name="SplashScreen"
+      component={SplashScreen}
+      options={fadeTrandisiton}
+    />
+
+    <Stack.Screen
       name="MainScreen"
       component={MainScreen}
-      options={transitionOptions}
+      options={fadeTrandisiton}
     />
+
     <Stack.Screen name="Home" component={Home} options={transitionOptions} />
+
     <Stack.Screen
       name="Library"
       component={Library}
