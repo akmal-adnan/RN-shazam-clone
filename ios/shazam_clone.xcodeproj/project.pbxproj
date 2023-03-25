@@ -20,6 +20,7 @@
 		8C594B3D9F8441ECAF2CCF9F /* NeueMontreal-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 638545A3BFF94585AE7AEF6D /* NeueMontreal-Regular.otf */; };
 		93B0752000EA4FC8A9799D62 /* Arial-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67BD4EA9D06A4596BAFBB5A3 /* Arial-Bold.ttf */; };
 		B0A5F8863BCC4EABA20AEFDE /* NeueMontreal-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D07E635CA1584F6089B17650 /* NeueMontreal-Bold.otf */; };
+		C1A2B9FC29C8843A00992DC5 /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A2B9FB29C8843A00992DC5 /* dummy.swift */; };
 		C1C8891529ACB6300004A917 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1C8891429ACB6300004A917 /* BootSplash.storyboard */; };
 		C1ED3FB129A7B66200112DB7 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = C1ED3FB029A7B66200112DB7 /* Fonts */; };
 		FDAACB99ABE24C0A9B1B6944 /* Arial-Bold-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E44C5BF3A0EB433FA6F1597F /* Arial-Bold-Italic.ttf */; };
@@ -50,17 +51,19 @@
 		5709B34CF0A7D63546082F79 /* Pods-shazam_clone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shazam_clone.release.xcconfig"; path = "Target Support Files/Pods-shazam_clone/Pods-shazam_clone.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-shazam_clone-shazam_cloneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shazam_clone-shazam_cloneTests.debug.xcconfig"; path = "Target Support Files/Pods-shazam_clone-shazam_cloneTests/Pods-shazam_clone-shazam_cloneTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-shazam_clone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-shazam_clone.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		638545A3BFF94585AE7AEF6D /* NeueMontreal-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NeueMontreal-Regular.otf"; path = "../src/assets/fonts/NeueMontreal-Regular.otf"; sourceTree = "<group>"; };
-		67BD4EA9D06A4596BAFBB5A3 /* Arial-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Arial-Bold.ttf"; path = "../src/assets/fonts/Arial-Bold.ttf"; sourceTree = "<group>"; };
+		638545A3BFF94585AE7AEF6D /* NeueMontreal-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NeueMontreal-Regular.otf"; path = "../src/assets/fonts/NeueMontreal-Regular.otf"; sourceTree = "<group>"; };
+		67BD4EA9D06A4596BAFBB5A3 /* Arial-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Arial-Bold.ttf"; path = "../src/assets/fonts/Arial-Bold.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = shazam_clone/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		85DC0B64CE60451797700D47 /* Arial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Arial.ttf; path = ../src/assets/fonts/Arial.ttf; sourceTree = "<group>"; };
+		85DC0B64CE60451797700D47 /* Arial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Arial.ttf; path = ../src/assets/fonts/Arial.ttf; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-shazam_clone-shazam_cloneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shazam_clone-shazam_cloneTests.release.xcconfig"; path = "Target Support Files/Pods-shazam_clone-shazam_cloneTests/Pods-shazam_clone-shazam_cloneTests.release.xcconfig"; sourceTree = "<group>"; };
-		B5E3C56BCC824A638843C7F8 /* NeueMontreal-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NeueMontreal-Medium.otf"; path = "../src/assets/fonts/NeueMontreal-Medium.otf"; sourceTree = "<group>"; };
+		B5E3C56BCC824A638843C7F8 /* NeueMontreal-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NeueMontreal-Medium.otf"; path = "../src/assets/fonts/NeueMontreal-Medium.otf"; sourceTree = "<group>"; };
+		C1A2B9FA29C8843A00992DC5 /* shazam_clone-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "shazam_clone-Bridging-Header.h"; sourceTree = "<group>"; };
+		C1A2B9FB29C8843A00992DC5 /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
 		C1C8891429ACB6300004A917 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = shazam_clone/BootSplash.storyboard; sourceTree = "<group>"; };
 		C1ED3FB029A7B66200112DB7 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
-		D07E635CA1584F6089B17650 /* NeueMontreal-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NeueMontreal-Bold.otf"; path = "../src/assets/fonts/NeueMontreal-Bold.otf"; sourceTree = "<group>"; };
-		E44C5BF3A0EB433FA6F1597F /* Arial-Bold-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Arial-Bold-Italic.ttf"; path = "../src/assets/fonts/Arial-Bold-Italic.ttf"; sourceTree = "<group>"; };
-		E706540A7ECA46B0BE61532F /* NeueMontreal-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NeueMontreal-Light.otf"; path = "../src/assets/fonts/NeueMontreal-Light.otf"; sourceTree = "<group>"; };
+		D07E635CA1584F6089B17650 /* NeueMontreal-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NeueMontreal-Bold.otf"; path = "../src/assets/fonts/NeueMontreal-Bold.otf"; sourceTree = "<group>"; };
+		E44C5BF3A0EB433FA6F1597F /* Arial-Bold-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Arial-Bold-Italic.ttf"; path = "../src/assets/fonts/Arial-Bold-Italic.ttf"; sourceTree = "<group>"; };
+		E706540A7ECA46B0BE61532F /* NeueMontreal-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NeueMontreal-Light.otf"; path = "../src/assets/fonts/NeueMontreal-Light.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -136,6 +139,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				C1A2B9FB29C8843A00992DC5 /* dummy.swift */,
 				13B07FAE1A68108700A75B9A /* shazam_clone */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* shazam_cloneTests */,
@@ -143,6 +147,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
 				D9AFA19886CE412AAA8921BF /* Resources */,
+				C1A2B9FA29C8843A00992DC5 /* shazam_clone-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -181,7 +186,6 @@
 				67BD4EA9D06A4596BAFBB5A3 /* Arial-Bold.ttf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,7 +247,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1420;
 					};
 				};
 			};
@@ -458,6 +462,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				C1A2B9FC29C8843A00992DC5 /* dummy.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -477,6 +482,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-shazam_clone-shazam_cloneTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -504,6 +510,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-shazam_clone-shazam_cloneTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = shazam_cloneTests/Info.plist;
@@ -545,6 +552,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = shazam_clone;
+				SWIFT_OBJC_BRIDGING_HEADER = "shazam_clone-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -571,6 +579,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = shazam_clone;
+				SWIFT_OBJC_BRIDGING_HEADER = "shazam_clone-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
