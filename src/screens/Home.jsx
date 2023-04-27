@@ -11,11 +11,11 @@ import LinearGradient from 'react-native-linear-gradient';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SearchIco from 'react-native-vector-icons/FontAwesome';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {SharedElement} from 'react-navigation-shared-element';
 import {COLORS, FONTS, IMAGES, SIZES, SVG} from '../constants';
 
-const Home = ({slidesRef}) => {
+const Home = ({slidesRef, itemId}) => {
   const pulse = useSharedValue(1);
-
   const inset = useSafeAreaInsets();
 
   // Top component
@@ -76,10 +76,12 @@ const Home = ({slidesRef}) => {
   const renderShazamLogo = () => (
     <View style={styles.shazam__container}>
       <Text style={styles.shazam__text}>Tap to Shazam</Text>
-      <Animated.View
-        style={[styles.shazam__logo, styles.shadow, pulseAnimation]}>
-        <SVG.ShazamLogo2SVG width={150} height={150} fill={COLORS.white1} />
-      </Animated.View>
+      <SharedElement id={`item.${itemId}.photo`}>
+        <Animated.View
+          style={[styles.shazam__logo, styles.shadow, pulseAnimation]}>
+          <SVG.ShazamLogo2SVG width={150} height={150} fill={COLORS.white1} />
+        </Animated.View>
+      </SharedElement>
 
       <View style={[styles.search__container, styles.shadow]}>
         <SearchIco
@@ -147,7 +149,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: SIZES.height / 8,
+    marginBottom: SIZES.height / 6,
   },
 
   shazam__text: {

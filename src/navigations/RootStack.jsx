@@ -1,5 +1,6 @@
 import React from 'react';
-import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+import {TransitionPresets} from '@react-navigation/stack';
+import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import {
   Home,
   Charts,
@@ -11,7 +12,7 @@ import {
   SplashScreen,
 } from '../screens';
 
-const Stack = createStackNavigator();
+const Stack = createSharedElementStackNavigator();
 const screenOptionStyle = {
   headerShown: false,
 };
@@ -22,8 +23,8 @@ const transitionOptions = {
 
 const fadeTrandisiton = () => ({
   transitionSpec: {
-    open: {animation: 'timing', config: {duration: 200}},
-    close: {animation: 'timing', config: {duration: 200}},
+    open: {animation: 'timing', config: {duration: 300}},
+    close: {animation: 'timing', config: {duration: 300}},
   },
   cardStyleInterpolator: ({current: {progress}}) => ({
     cardStyle: {
@@ -44,9 +45,24 @@ const RootStack = () => (
       name="MainScreen"
       component={MainScreen}
       options={fadeTrandisiton}
+      // eslint-disable-next-line consistent-return
+      sharedElements={(route, otherRoute) => {
+        const {itemId} = route.params;
+        if (otherRoute.name === 'SplashScreen') {
+          return [`item.${itemId}.photo`];
+        }
+      }}
     />
 
-    <Stack.Screen name="Home" component={Home} options={transitionOptions} />
+    <Stack.Screen
+      name="Home"
+      component={Home}
+      options={transitionOptions}
+      // sharedElements={route => {
+      //   const {itemId} = route.params;
+      //   return [`item.${itemId}.photo`];
+      // }}
+    />
 
     <Stack.Screen
       name="Library"

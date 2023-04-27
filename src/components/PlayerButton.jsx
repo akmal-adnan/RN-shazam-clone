@@ -96,7 +96,7 @@ const PlayerButton = () => {
             <ActivityIndicator color={COLORS.white1} size="large" />
           )}
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => TrackPlayer.skipToNext}>
+        <TouchableOpacity onPress={() => TrackPlayer.skipToNext()}>
           <Entypo name="controller-next" size={60} color={COLORS.orange} />
         </TouchableOpacity>
       </View>

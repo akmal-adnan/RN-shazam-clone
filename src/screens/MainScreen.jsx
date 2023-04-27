@@ -84,9 +84,10 @@ const TheDot = ({scrollX}) => {
   );
 };
 
-const MainScreen = ({navigation}) => {
+const MainScreen = ({navigation, route}) => {
   const slidesRef = useRef();
   const scrollX = useSharedValue(393);
+  const {itemId} = route.params;
 
   const SCREEN = [
     {
@@ -95,7 +96,9 @@ const MainScreen = ({navigation}) => {
     },
     {
       key: 'home',
-      component: <Home navigation={navigation} slidesRef={slidesRef} />,
+      component: (
+        <Home navigation={navigation} slidesRef={slidesRef} itemId={itemId} />
+      ),
     },
     {
       key: 'charts',
