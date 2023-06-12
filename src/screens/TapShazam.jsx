@@ -21,102 +21,32 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {SharedElement} from 'react-navigation-shared-element';
 import {COLORS, FONTS, IMAGES, SIZES, SVG} from '../constants';
 
-const Home = ({slidesRef, navigation, route}) => {
-  const pulse = useSharedValue(1);
-  const inset = useSafeAreaInsets();
+const TapShazam = ({navigation, route}) => {
   const {itemId} = route.params;
-
-  // Top component
-  const renderTop = () => (
-    <View
-      style={{...styles.top__container, paddingTop: inset.top, marginTop: 12}}>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        style={styles.icon__container}
-        onPress={() =>
-          slidesRef.current.scrollToIndex({index: 0, animated: true})
-        }>
-        <View style={styles.library__icon}>
-          <Icons
-            name="account-music"
-            size={35}
-            color={COLORS.white1}
-            style={{paddingTop: 5}}
-          />
-        </View>
-        <Text style={styles.icon__text}>Library</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        activeOpacity={0.8}
-        style={styles.icon__container}
-        onPress={() =>
-          slidesRef.current.scrollToIndex({index: 2, animated: true})
-        }>
-        <View style={styles.charts__icon}>
-          <Image
-            source={IMAGES.ChartsIcon}
-            resizeMode="contain"
-            style={{width: 20, height: 20, tintColor: COLORS.blue4}}
-          />
-        </View>
-        <Text style={styles.icon__text}>Charts</Text>
-      </TouchableOpacity>
-    </View>
-  );
-
-  React.useEffect(() => {
-    pulse.value = withRepeat(
-      withSequence(
-        withTiming(1.05, {duration: 1200}),
-        withTiming(1, {duration: 1200}),
-      ),
-      -1,
-    );
-  });
-
-  // Define the pulsating animation
-  const pulseAnimation = useAnimatedStyle(() => ({
-    transform: [{scale: pulse.value}],
-  }));
-
   // Logo component
   const renderShazamLogo = () => (
     <View style={styles.shazam__container}>
-      <Text style={styles.shazam__text}>Tap to Shazam</Text>
-
       <SharedElement id={`item.${itemId}.photo`}>
-        <Pressable
+        {/* <Pressable
           onPress={() => {
-            navigation.push('TapShazam', {itemId});
-          }}>
-          <Animated.View
-            style={[styles.shazam__logo, styles.shadow, pulseAnimation]}>
-            <SVG.ShazamLogo2SVG width={150} height={150} fill={COLORS.white1} />
-          </Animated.View>
-        </Pressable>
+            navigation.push('TapShazam');
+          }}> */}
+        <Animated.View style={[styles.shazam__logo, styles.shadow]}>
+          <SVG.ShazamLogo2SVG width={115} height={115} fill={COLORS.white1} />
+        </Animated.View>
+        {/* </Pressable> */}
       </SharedElement>
-
-      <View style={[styles.search__container, styles.shadow]}>
-        <SearchIco
-          name="search"
-          size={28}
-          color={COLORS.white1}
-          style={{position: 'absolute'}}
-        />
-      </View>
     </View>
   );
 
   return (
     <LinearGradient colors={[COLORS.blue4, COLORS.blue3]} style={{flex: 1}}>
-      {renderTop()}
       {renderShazamLogo()}
     </LinearGradient>
   );
 };
 
-export default Home;
+export default TapShazam;
 
 const styles = StyleSheet.create({
   main__container: {

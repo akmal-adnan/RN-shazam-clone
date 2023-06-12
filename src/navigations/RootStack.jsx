@@ -10,6 +10,7 @@ import {
   SongDetails,
   MusicPlayer,
   SplashScreen,
+  TapShazam,
 } from '../screens';
 
 const Stack = createSharedElementStackNavigator();
@@ -54,14 +55,16 @@ const RootStack = () => (
       }}
     />
 
+    <Stack.Screen name="Home" component={Home} options={transitionOptions} />
+
     <Stack.Screen
-      name="Home"
-      component={Home}
-      options={transitionOptions}
-      // sharedElements={route => {
-      //   const {itemId} = route.params;
-      //   return [`item.${itemId}.photo`];
-      // }}
+      name="TapShazam"
+      component={TapShazam}
+      options={fadeTrandisiton}
+      sharedElements={route => {
+        const {itemId} = route.params;
+        return [`item.${itemId}.photo`];
+      }}
     />
 
     <Stack.Screen

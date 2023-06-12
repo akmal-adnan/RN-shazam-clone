@@ -6,6 +6,7 @@ import MainScreen from './MainScreen';
 import SongDetails from './SongDetails';
 import MusicPlayer from './MusicPlayer';
 import SplashScreen from './SplashScreen';
+import TapShazam from './TapShazam';
 
 export {
   MainScreen,
@@ -16,4 +17,5 @@ export {
   SongDetails,
   MusicPlayer,
   SplashScreen,
+  TapShazam,
 };
