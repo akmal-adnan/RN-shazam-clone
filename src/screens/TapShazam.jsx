@@ -16,13 +16,13 @@ import Animated, {
 } from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
-import SearchIco from 'react-native-vector-icons/FontAwesome';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {SharedElement} from 'react-navigation-shared-element';
 import {COLORS, FONTS, IMAGES, SIZES, SVG} from '../constants';
 
 const TapShazam = ({navigation, route}) => {
   const {itemId} = route.params;
+  const inset = useSafeAreaInsets();
   // Logo component
   const renderShazamLogo = () => (
     <View style={styles.shazam__container}>
@@ -39,8 +39,27 @@ const TapShazam = ({navigation, route}) => {
     </View>
   );
 
+  const renderCloseButton = () => (
+    <Pressable
+      style={{
+        marginTop: inset.top + 5,
+        marginLeft: 16,
+        position: 'absolute',
+        zIndex: 1,
+      }}
+      onPress={() => navigation.goBack()}>
+      <Icons
+        name="close"
+        size={32}
+        color={COLORS.white1}
+        // style={{paddingTop: 5}}
+      />
+    </Pressable>
+  );
+
   return (
     <LinearGradient colors={[COLORS.blue4, COLORS.blue3]} style={{flex: 1}}>
+      {renderCloseButton()}
       {renderShazamLogo()}
     </LinearGradient>
   );
