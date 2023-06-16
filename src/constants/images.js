@@ -9,6 +9,7 @@ const WorldMap = require('../assets/images/world-map.jpg');
 const ChartsIcon = require('../assets/images/charts.png');
 
 const SoundBar = require('../assets/animations/icon_equalizer.json');
+const SoundBarWhite = require('../assets/animations/icon_equalizer_white.json');
 
 export const IMAGES = {
   AppleMusic,
@@ -26,6 +27,7 @@ export const SVG = {
 
 export const LOTTIE = {
   SoundBar,
+  SoundBarWhite,
 };
 
 export default {IMAGES, SVG, LOTTIE};

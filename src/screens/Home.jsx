@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -65,7 +65,7 @@ const Home = ({slidesRef, navigation, route}) => {
     </View>
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     pulse.value = withRepeat(
       withSequence(
         withTiming(1.05, {duration: 1200}),

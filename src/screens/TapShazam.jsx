@@ -1,40 +1,71 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Pressable,
-} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
 import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
+  FadeInDown,
+  Layout,
+  FadeOutUp,
   withTiming,
   withSequence,
+  withRepeat,
+  useSharedValue,
+  useAnimatedStyle,
 } from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {SharedElement} from 'react-navigation-shared-element';
-import {COLORS, FONTS, IMAGES, SIZES, SVG} from '../constants';
+import Lottie from 'lottie-react-native';
+import {COLORS, FONTS, LOTTIE, SIZES, SVG} from '../constants';
+import {RingAnimation} from '../components';
 
 const TapShazam = ({navigation, route}) => {
   const {itemId} = route.params;
   const inset = useSafeAreaInsets();
+  const pulse = useSharedValue(1);
+
+  const [showText, setText] = useState(true);
+
+  // Text interval
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setText(!showText);
+    }, 5000); // Duration to display each set of text
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [showText]);
+
+  // Pulse animation
+  useEffect(() => {
+    pulse.value = withRepeat(
+      withSequence(
+        withTiming(1.07, {duration: 500}),
+        withTiming(1, {duration: 500}),
+      ),
+      -1,
+    );
+  }, [pulse]);
+
+  // Define the pulsating animation
+  const pulseAnimation = useAnimatedStyle(() => ({
+    transform: [{scale: pulse.value}],
+  }));
+
   // Logo component
   const renderShazamLogo = () => (
     <View style={styles.shazam__container}>
+      {/* Wave */}
+      {[...Array(3).keys()].map((_, index) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <RingAnimation key={index} index={index} />
+      ))}
+
       <SharedElement id={`item.${itemId}.photo`}>
-        {/* <Pressable
-          onPress={() => {
-            navigation.push('TapShazam');
-          }}> */}
-        <Animated.View style={[styles.shazam__logo, styles.shadow]}>
-          <SVG.ShazamLogo2SVG width={115} height={115} fill={COLORS.white1} />
+        <Animated.View
+          style={[styles.shazam__logo, styles.shadow, pulseAnimation]}>
+          <SVG.ShazamLogo2SVG width={110} height={110} fill={COLORS.white1} />
         </Animated.View>
-        {/* </Pressable> */}
       </SharedElement>
     </View>
   );
@@ -57,10 +88,61 @@ const TapShazam = ({navigation, route}) => {
     </Pressable>
   );
 
+  const renderText = () => (
+    <Animated.View
+      entering={FadeInDown.delay(400)}
+      style={{
+        marginTop: SIZES.height / 4.5,
+      }}>
+      <View style={{alignItems: 'center'}}>
+        <Lottie
+          source={LOTTIE.SoundBarWhite}
+          autoPlay
+          loop
+          style={{
+            width: 40,
+            height: 40,
+            marginBottom: 8,
+          }}
+        />
+      </View>
+
+      {showText && (
+        <Animated.View
+          style={{alignItems: 'center'}}
+          entering={FadeInDown}
+          exiting={FadeOutUp}>
+          <Text style={{...FONTS.m2, color: COLORS.white1}}>
+            Listening for music
+          </Text>
+          <Text style={{...FONTS.p4, color: COLORS.icon1}}>
+            Make sure your device can hear the song clearly
+          </Text>
+        </Animated.View>
+      )}
+
+      {!showText && (
+        <Animated.View
+          style={{alignItems: 'center'}}
+          entering={FadeInDown}
+          exiting={FadeOutUp}
+          layout={Layout}>
+          <Text style={{...FONTS.m2, color: COLORS.white1}}>
+            Searching for a match
+          </Text>
+          <Text style={{...FONTS.p4, color: COLORS.icon1}}>Please Wait</Text>
+        </Animated.View>
+      )}
+    </Animated.View>
+  );
+
   return (
-    <LinearGradient colors={[COLORS.blue4, COLORS.blue3]} style={{flex: 1}}>
+    <LinearGradient
+      colors={[COLORS.blue4, COLORS.blue3]}
+      style={styles.main__container}>
       {renderCloseButton()}
       {renderShazamLogo()}
+      {renderText()}
     </LinearGradient>
   );
 };
@@ -84,42 +166,10 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
 
-  top__container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-  },
-
-  icon__container: {justifyContent: 'center', alignItems: 'center'},
-
-  icon__text: {...FONTS.m4, color: COLORS.white1, paddingTop: 10},
-
-  library__icon: {
-    borderRadius: 50,
-    height: 35,
-    width: 35,
-    overflow: 'hidden',
-    marginTop: -5,
-  },
-
-  charts__icon: {
-    backgroundColor: COLORS.white1,
-    borderRadius: 50,
-    padding: 4,
-  },
-
   shazam__container: {
-    flex: 1,
-    justifyContent: 'center',
+    marginTop: SIZES.height / 3.7,
     alignItems: 'center',
-    marginBottom: SIZES.height / 6,
-  },
-
-  shazam__text: {
-    ...FONTS.m2,
-    fontSize: 26,
-    color: COLORS.white1,
-    paddingBottom: 50,
+    justifyContent: 'center',
   },
 
   shazam__logo: {
@@ -128,17 +178,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#4FB3FE',
     padding: 30,
     borderRadius: 1000,
-  },
-
-  search__container: {
-    marginTop: 100,
-    backgroundColor: '#2895FE',
-    padding: 30,
-    borderRadius: 50,
-    position: 'relative',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 0.5,
-    borderColor: COLORS.blue4,
   },
 });

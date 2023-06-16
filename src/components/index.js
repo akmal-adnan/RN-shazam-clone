@@ -6,6 +6,7 @@ import Header2 from './Header2';
 import TrackTopSongs from './TrackTopSongs';
 import TrackRelatedSongs from './TrackRelatedSongs';
 import PlayerButton from './PlayerButton';
+import RingAnimation from './RingAnimation';
 
 // eslint-disable-next-line import/prefer-default-export
 export {
@@ -17,4 +18,5 @@ export {
   TrackTopSongs,
   TrackRelatedSongs,
   PlayerButton,
+  RingAnimation,
 };
