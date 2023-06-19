@@ -16,7 +16,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {SharedElement} from 'react-navigation-shared-element';
 import Lottie from 'lottie-react-native';
 import {COLORS, FONTS, LOTTIE, SIZES, SVG} from '../constants';
-import {RingAnimation} from '../components';
+import {RingAnimation, RingOuter} from '../components';
 
 const TapShazam = ({navigation, route}) => {
   const {itemId} = route.params;
@@ -40,7 +40,7 @@ const TapShazam = ({navigation, route}) => {
   useEffect(() => {
     pulse.value = withRepeat(
       withSequence(
-        withTiming(1.07, {duration: 500}),
+        withTiming(1.02, {duration: 500}),
         withTiming(1, {duration: 500}),
       ),
       -1,
@@ -59,6 +59,11 @@ const TapShazam = ({navigation, route}) => {
       {[...Array(3).keys()].map((_, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <RingAnimation key={index} index={index} />
+      ))}
+
+      {[...Array(2).keys()].map((_, index) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <RingOuter key={index} index={index} />
       ))}
 
       <SharedElement id={`item.${itemId}.photo`}>
