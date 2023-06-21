@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import {
   View,
@@ -13,7 +13,6 @@ import {FONTS, COLORS, IMAGES, SIZES, DATA} from '../constants';
 
 const Charts = ({navigation}) => {
   const insets = useSafeAreaInsets();
-  const [data] = useState(DATA.CountryList);
 
   const renderHeader = () => (
     <View
@@ -88,7 +87,7 @@ const Charts = ({navigation}) => {
 
       <FlatList
         bounces={false}
-        data={data}
+        data={DATA.CountryList}
         ListHeaderComponent={renderMap}
         renderItem={renderItem}
         keyExtractor={item => item.key.toString()}

@@ -1,20 +1,24 @@
 /* eslint-disable import/no-unresolved */
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {VITE_SHAZAM_CORE_RAPID_API_KEY} from '@env';
+// import {VITE_SHAZAM_CORE_RAPID_API_KEY} from '@env';
 
 export const ShazamCoreApi = createApi({
   reducerPath: 'ShazamCoreApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://shazam-core.p.rapidapi.com/',
-    prepareHeaders: headers => {
-      headers.set('X-RapidAPI-Key', VITE_SHAZAM_CORE_RAPID_API_KEY);
+    baseUrl: 'https://www.shazam.com/',
+    // baseUrl: 'https://shazam-core.p.rapidapi.com/',
+    // prepareHeaders: headers => {
+    //   headers.set('X-RapidAPI-Key', VITE_SHAZAM_CORE_RAPID_API_KEY);
 
-      return headers;
-    },
+    //   return headers;
+    // },
   }),
 
   endpoints: builder => ({
-    getTopCharts: builder.query({query: () => 'v1/charts/world'}),
+    getTopCharts: builder.query({
+      query: ({listid, limitCount}) =>
+        `services/amapi/v1/catalog/MY/playlists/${listid}/tracks?limit=${limitCount}&l=en-US&relate[songs]=artists,music-videos`,
+    }),
 
     getSongDetails: builder.query({
       query: songid => `v1/tracks/details?track_id=${songid}`,

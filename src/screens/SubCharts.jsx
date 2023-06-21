@@ -12,14 +12,20 @@ import Animated, {
   useSharedValue,
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
-import {FONTS, COLORS, SIZES, DATA, SVG} from '../constants';
+import {FONTS, COLORS, SIZES, SVG} from '../constants';
 import {Header} from '../components';
+import {useGetTopChartsQuery} from '../redux/services/ShazamCore';
 
 const ReanimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const SubCharts = ({navigation, route}) => {
   const scrollY = useSharedValue(0);
   const {country} = route.params;
+
+  const {data} = useGetTopChartsQuery({
+    listid: 'pl.92758f0134f34f67a96cef752e47dd16',
+    limitCount: 20,
+  });
 
   const renderButton = () => (
     <View style={{paddingVertical: 15, alignItems: 'center'}}>
@@ -36,102 +42,114 @@ const SubCharts = ({navigation, route}) => {
     </View>
   );
 
-  const renderItem = ({item, index}) => (
-    <TouchableOpacity
-      onPress={() => navigation.push('SongDetails')}
-      onLongPress={() => console.log('Multiselect action')}
-      activeOpacity={0.7}
-      style={{
-        flexDirection: 'row',
-        paddingVertical: 16,
-        paddingHorizontal: 16,
-        position: 'relative',
-      }}>
-      <ImageBackground
-        source={{uri: item?.images?.coverart}}
-        resizeMode="contain"
-        imageStyle={{borderRadius: 5}}
-        style={styles.song__cover}>
-        <View
-          style={{
-            borderRadius: 5,
-            backgroundColor: 'rgba(0,0,0,0.6)',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '22%',
-            height: '22%',
-          }}>
-          <Text style={{...FONTS.m4, fontSize: 14, color: COLORS.white1}}>
-            {index + 1}
-          </Text>
-        </View>
+  const renderItem = ({item, index}) => {
+    const imageUrl = item?.attributes?.artwork.url
+      .replace('{w}', '400')
+      .replace('{h}', '400');
 
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={{
-            backgroundColor: 'rgba(0,0,0,0.6)',
-            justifyContent: 'center',
-            alignSelf: 'center',
-            borderRadius: 100,
-            padding: 14,
-            marginTop: 10,
-          }}>
-          <Ionicons name="play" size={18} color={COLORS.white1} />
-        </TouchableOpacity>
-      </ImageBackground>
-
-      {/* Descripiton */}
-      <View
+    return (
+      <TouchableOpacity
+        onPress={() => navigation.push('SongDetails')}
+        onLongPress={() => console.log('Multiselect action')}
+        activeOpacity={0.7}
         style={{
-          flex: 1,
-          marginLeft: 16,
-          justifyContent: 'space-between',
+          flexDirection: 'row',
+          paddingVertical: 16,
+          paddingHorizontal: 16,
+          position: 'relative',
         }}>
-        <View>
-          <Text numberOfLines={1} style={styles.song__title}>
-            {item?.title}
-          </Text>
-          <Text numberOfLines={1} style={styles.song__subtitle}>
-            {item?.subtitle}
-          </Text>
-        </View>
+        <ImageBackground
+          source={{
+            uri: imageUrl,
+          }}
+          resizeMode="contain"
+          imageStyle={{borderRadius: 5}}
+          style={styles.song__cover}>
+          <View
+            style={{
+              borderRadius: 5,
+              backgroundColor: 'rgba(0,0,0,0.6)',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '22%',
+              height: '22%',
+            }}>
+            <Text style={{...FONTS.m4, fontSize: 14, color: COLORS.white1}}>
+              {index + 1}
+            </Text>
+          </View>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}>
           <TouchableOpacity
             activeOpacity={0.7}
             style={{
-              paddingHorizontal: 9,
-              paddingVertical: 5,
-              borderRadius: 20,
-              backgroundColor: COLORS.black6,
-              bottom: 0,
+              backgroundColor: 'rgba(0,0,0,0.6)',
+              justifyContent: 'center',
+              alignSelf: 'center',
+              borderRadius: 100,
+              padding: 14,
+              marginTop: 10,
             }}>
-            <SVG.AppleMusicSVG width={50} height={15} fill={COLORS.white1} />
+            <Ionicons name="play" size={18} color={COLORS.white1} />
           </TouchableOpacity>
+        </ImageBackground>
 
-          <TouchableOpacity activeOpacity={0.5} style={{marginRight: -5}}>
-            <Ionicons name="ellipsis-vertical" size={24} color={COLORS.icon1} />
-          </TouchableOpacity>
-        </View>
-
+        {/* Descripiton */}
         <View
           style={{
-            bottom: 0,
-            width: '100%',
-            borderColor: COLORS.lightgrey,
-            position: 'absolute',
-            borderBottomWidth: 1,
-            marginBottom: -15,
-          }}
-        />
-      </View>
-    </TouchableOpacity>
-  );
+            flex: 1,
+            marginLeft: 16,
+            justifyContent: 'space-between',
+          }}>
+          <View>
+            <Text numberOfLines={1} style={styles.song__title}>
+              {item?.attributes.name}
+            </Text>
+            <Text numberOfLines={1} style={styles.song__subtitle}>
+              {item?.attributes.artistName}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              style={{
+                paddingHorizontal: 9,
+                paddingVertical: 5,
+                borderRadius: 20,
+                backgroundColor: COLORS.black6,
+                bottom: 0,
+              }}>
+              <SVG.AppleMusicSVG width={50} height={15} fill={COLORS.white1} />
+            </TouchableOpacity>
+
+            <TouchableOpacity activeOpacity={0.5} style={{marginRight: -5}}>
+              <Ionicons
+                name="ellipsis-vertical"
+                size={24}
+                color={COLORS.icon1}
+              />
+            </TouchableOpacity>
+          </View>
+
+          <View
+            style={{
+              bottom: 0,
+              width: '100%',
+              borderColor: COLORS.lightgrey,
+              position: 'absolute',
+              borderBottomWidth: 1,
+              marginBottom: -15,
+            }}
+          />
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.main__container}>
@@ -142,9 +160,9 @@ const SubCharts = ({navigation, route}) => {
         contentContainerStyle={{paddingBottom: 50}}
         bounces={false}
         scrollEventThrottle={16}
-        data={DATA.ChartsByCountry.slice(0, 10)}
+        data={data?.data}
         renderItem={renderItem}
-        keyExtractor={item => item.key}
+        keyExtractor={item => item.id}
         onScroll={useAnimatedScrollHandler(event => {
           scrollY.value = event.contentOffset.y;
         })}
