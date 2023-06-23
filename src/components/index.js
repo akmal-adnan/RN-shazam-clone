@@ -8,6 +8,7 @@ import TrackRelatedSongs from './TrackRelatedSongs';
 import PlayerButton from './PlayerButton';
 import RingAnimation from './RingAnimation';
 import RingOuter from './RingOuter';
+import ChartCountryList from './ChartCountryList';
 
 // eslint-disable-next-line import/prefer-default-export
 export {
@@ -21,4 +22,5 @@ export {
   PlayerButton,
   RingAnimation,
   RingOuter,
+  ChartCountryList,
 };
