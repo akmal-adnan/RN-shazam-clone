@@ -21,7 +21,16 @@ export const ShazamCoreApi = createApi({
     }),
 
     getSongDetails: builder.query({
-      query: songid => `v1/tracks/details?track_id=${songid}`,
+      query: songid => `song/v1/en-US/MY/web/shazam-songs?adamId=${songid}`,
+    }),
+
+    getSongMetaData: builder.query({
+      query: songKey =>
+        `https://www.shazam.com/discovery/v5/en-US/MY/web/-/track/${songKey}?shazamapiversion=v3&video=v3`,
+    }),
+
+    getSongCount: builder.query({
+      query: songid => `services/count/v2/android/track/${songid}`,
     }),
 
     getSongRelated: builder.query({
@@ -50,6 +59,8 @@ export const ShazamCoreApi = createApi({
 export const {
   useGetTopChartsQuery,
   useGetSongDetailsQuery,
+  useGetSongMetaDataQuery,
+  useGetSongCountQuery,
   useGetSongRelatedQuery,
   useGetArtistDetailsQuery,
   useGetSongsByCountryQuery,
