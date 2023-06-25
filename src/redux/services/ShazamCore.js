@@ -33,6 +33,11 @@ export const ShazamCoreApi = createApi({
       query: songid => `services/count/v2/android/track/${songid}`,
     }),
 
+    getTopSongRelated: builder.query({
+      query: songid =>
+        `services/amapi/v1/catalog/MY/artists/${songid}?views=top-songs`,
+    }),
+
     getSongRelated: builder.query({
       query: songid => `v1/tracks/related?track_id=${songid}`,
     }),
@@ -61,6 +66,7 @@ export const {
   useGetSongDetailsQuery,
   useGetSongMetaDataQuery,
   useGetSongCountQuery,
+  useGetTopSongRelatedQuery,
   useGetSongRelatedQuery,
   useGetArtistDetailsQuery,
   useGetSongsByCountryQuery,

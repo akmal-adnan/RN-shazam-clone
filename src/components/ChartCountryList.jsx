@@ -34,7 +34,7 @@ const ChartCountryList = ({navigation, item}) => {
 
           return (
             <TouchableOpacity
-              onPress={() => navigation.push('SongDetails')}
+              onPress={() => navigation.push('SongDetails', {songId: song?.id})}
               activeOpacity={0.7}
               key={song.id}
               style={{marginRight: index < 2 ? 10 : 0}}>

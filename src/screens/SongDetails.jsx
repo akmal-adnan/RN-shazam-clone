@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCom from 'react-native-vector-icons/MaterialCommunityIcons';
 import Animated, {
   useAnimatedStyle,
+  Layout,
   interpolate,
   Extrapolate,
   useSharedValue,
@@ -20,19 +21,26 @@ import Animated, {
 import LinearGradient from 'react-native-linear-gradient';
 import {COLORS, FONTS, DATA, SIZES, SVG} from '../constants';
 import {ApplePlayButton, TrackRelatedSongs, TrackTopSongs} from '../components';
+import {
+  useGetSongCountQuery,
+  useGetSongDetailsQuery,
+  useGetSongMetaDataQuery,
+} from '../redux/services/ShazamCore';
 
-const SongDetails = ({navigation}) => {
+const SongDetails = ({navigation, route}) => {
   const insets = useSafeAreaInsets();
   const scrollY = useSharedValue(0);
 
-  const [data] = useState(DATA.TrackDetails[0]);
+  const {songId} = route.params;
 
-  const totalShazams = useMemo(
-    () =>
-      DATA?.TotalShazams?.total
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-    [],
+  const {data: songDetailsData} = useGetSongDetailsQuery(songId);
+
+  const {data: songMetaData} = useGetSongMetaDataQuery(
+    songDetailsData?.data[0].id,
+  );
+
+  const {data: songShazamCount} = useGetSongCountQuery(
+    songDetailsData?.data[0].id,
   );
 
   const animateHeader = useAnimatedStyle(() => {
@@ -84,7 +92,7 @@ const SongDetails = ({navigation}) => {
         </TouchableOpacity>
         <Animated.Text
           style={[titileOpacity, {...styles.header__text, paddingLeft: 18}]}>
-          {data?.title}
+          {songMetaData?.title}
         </Animated.Text>
       </View>
 
@@ -130,10 +138,10 @@ const SongDetails = ({navigation}) => {
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View>
           <Text style={{color: COLORS.white1, ...FONTS.h1, paddingBottom: 5}}>
-            {data?.title}
+            {songMetaData?.title}
           </Text>
           <Text style={{color: COLORS.icon2, ...FONTS.p4, paddingBottom: 5}}>
-            {data?.subtitle}
+            {songMetaData?.subtitle}
           </Text>
 
           <View
@@ -144,7 +152,7 @@ const SongDetails = ({navigation}) => {
             }}>
             <SVG.ShazamLogoSVG width={15} height={15} fill={COLORS.icon2} />
             <Text style={{color: COLORS.darkgrey, ...FONTS.p5, paddingLeft: 5}}>
-              {totalShazams} Shazams
+              {songShazamCount?.total} Shazams
             </Text>
           </View>
         </View>
@@ -239,15 +247,23 @@ const SongDetails = ({navigation}) => {
 
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <Text style={{...FONTS.m4, color: COLORS.darkgrey}}>Track :</Text>
-        <Text style={{...FONTS.m4, color: COLORS.white1}}>{data.title}</Text>
+        <Text style={{...FONTS.m4, color: COLORS.white1}}>
+          {songMetaData?.title}
+        </Text>
       </View>
 
       <View style={{height: 1, backgroundColor: COLORS.black6}} />
 
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <Text style={{...FONTS.m4, color: COLORS.darkgrey}}>Album :</Text>
-        <Text style={{...FONTS.m4, color: COLORS.white1}}>
-          {data.sections[0]?.metadata[0]?.text}
+        <Text
+          style={{
+            ...FONTS.m4,
+            color: COLORS.white1,
+            maxWidth: SIZES.width / 1.3,
+            textAlign: 'right',
+          }}>
+          {songMetaData?.sections[0].metadata[0].text}
         </Text>
       </View>
 
@@ -256,7 +272,7 @@ const SongDetails = ({navigation}) => {
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <Text style={{...FONTS.m4, color: COLORS.darkgrey}}>Label :</Text>
         <Text style={{...FONTS.m4, color: COLORS.white1}}>
-          {data.sections[0]?.metadata[1]?.text}
+          {songMetaData?.sections[0].metadata[1].text}
         </Text>
       </View>
 
@@ -265,7 +281,7 @@ const SongDetails = ({navigation}) => {
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <Text style={{...FONTS.m4, color: COLORS.darkgrey}}>Released :</Text>
         <Text style={{...FONTS.m4, color: COLORS.white1}}>
-          {data.sections[0]?.metadata[2]?.text}
+          {songMetaData?.sections[0].metadata[2].text}
         </Text>
       </View>
     </View>
@@ -283,7 +299,7 @@ const SongDetails = ({navigation}) => {
       <TouchableOpacity
         style={{
           backgroundColor: COLORS.blue1,
-          paddingVertical: 15,
+          paddingVertical: 13,
           paddingHorizontal: 100,
           borderRadius: 10,
         }}>
@@ -301,7 +317,7 @@ const SongDetails = ({navigation}) => {
       />
       <ImageBackground
         source={{
-          uri: data?.images?.background,
+          uri: songMetaData?.images?.background,
         }}
         resizeMode="cover"
         imageStyle={{
@@ -331,11 +347,22 @@ const SongDetails = ({navigation}) => {
           })}>
           {renderItemTop()}
 
-          <TrackTopSongs />
-          {renderVideo()}
-          <TrackRelatedSongs />
-          {renderFooter()}
-          {shareButton()}
+          <Animated.View layout={Layout}>
+            {songMetaData?.artists[0].adamid && (
+              <TrackTopSongs adamid={songMetaData?.artists[0].adamid} />
+            )}
+          </Animated.View>
+
+          <Animated.View layout={Layout}>{renderVideo()}</Animated.View>
+
+          <Animated.View layout={Layout}>
+            <TrackRelatedSongs />
+          </Animated.View>
+
+          <Animated.View layout={Layout}>
+            {renderFooter()}
+            {shareButton()}
+          </Animated.View>
         </Animated.ScrollView>
       </ImageBackground>
     </>

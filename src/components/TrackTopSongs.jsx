@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,24 +8,22 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {COLORS, DATA, FONTS, SIZES, SVG} from '../constants';
+import Animated, {FadeIn} from 'react-native-reanimated';
+import {COLORS, FONTS, SIZES, SVG} from '../constants';
+import {useGetTopSongRelatedQuery} from '../redux/services/ShazamCore';
 
-function Loading() {
+const TrackTopSongs = ({adamid}) => {
+  const {data} = useGetTopSongRelatedQuery(adamid);
+
   return (
-    <View>
-      <Text>Loading...</Text>
-    </View>
-  );
-}
+    <Animated.View
+      entering={FadeIn}
+      style={{backgroundColor: COLORS.black1, paddingTop: 20}}>
+      <Text style={styles.top__title}>TOP SONGS</Text>
 
-const TrackTopSongs = () => (
-  <View style={{backgroundColor: COLORS.black1, paddingTop: 20}}>
-    <Text style={styles.top__title}>TOP SONGS</Text>
-
-    <Suspense fallback={<Loading />}>
       <ScrollView horizontal bounces={false}>
         <View style={styles.list__container}>
-          {DATA?.FeaturedSongs?.data[0]?.views['top-songs'].data.map(item => (
+          {data?.data[0].views['top-songs'].data.map(item => (
             <View key={item.id} style={styles.song__container}>
               <ImageBackground
                 source={{
@@ -65,9 +63,9 @@ const TrackTopSongs = () => (
           ))}
         </View>
       </ScrollView>
-    </Suspense>
-  </View>
-);
+    </Animated.View>
+  );
+};
 
 export default TrackTopSongs;
 
