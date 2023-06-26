@@ -12,7 +12,7 @@ import Animated, {FadeIn} from 'react-native-reanimated';
 import {COLORS, FONTS, SIZES, SVG} from '../constants';
 import {useGetTopSongRelatedQuery} from '../redux/services/ShazamCore';
 
-const TrackTopSongs = ({adamid}) => {
+const TrackTopSongs = ({navigation, adamid}) => {
   const {data} = useGetTopSongRelatedQuery(adamid);
 
   return (
@@ -24,7 +24,11 @@ const TrackTopSongs = ({adamid}) => {
       <ScrollView horizontal bounces={false}>
         <View style={styles.list__container}>
           {data?.data[0].views['top-songs'].data.map(item => (
-            <View key={item.id} style={styles.song__container}>
+            <TouchableOpacity
+              key={item.id}
+              activeOpacity={0.8}
+              style={styles.song__container}
+              onPress={() => navigation.push('SongDetails', {songId: item.id})}>
               <ImageBackground
                 source={{
                   uri: item.attributes.artwork.url
@@ -59,7 +63,7 @@ const TrackTopSongs = ({adamid}) => {
                   />
                 </TouchableOpacity>
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </ScrollView>

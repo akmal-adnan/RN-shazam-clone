@@ -8,33 +8,48 @@ import {
   FlatList,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {COLORS, DATA, FONTS, SIZES, SVG} from '../constants';
+import {COLORS, FONTS, SIZES, SVG} from '../constants';
+import {useGetSongRelatedQuery} from '../redux/services/ShazamCore';
 
-const TrackRelatedSongs = () => {
+const TrackRelatedSongs = ({navigation, newSongId}) => {
+  const {data} = useGetSongRelatedQuery({
+    songid: newSongId,
+    startFrom: 0,
+    pageSize: 10,
+  });
+
   const renderList = ({item, index}) => (
     <View style={{paddingLeft: index === 0 ? 16 : 0, paddingRight: 16}}>
-      <ImageBackground
-        source={{
-          uri: item?.images?.coverart,
-        }}
-        resizeMode="contain"
-        imageStyle={styles.image__style}
-        style={styles.image__container}>
-        <TouchableOpacity activeOpacity={0.7} style={styles.play__button}>
-          <Ionicons name="play" size={28} color={COLORS.white1} />
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => {
+          if (item.hub.actions) {
+            navigation.push('SongDetails', {songId: item?.hub?.actions[0]?.id});
+          } else console.log('Something wrong');
+        }}>
+        <ImageBackground
+          source={{
+            uri: item?.images?.coverart,
+          }}
+          resizeMode="contain"
+          imageStyle={styles.image__style}
+          style={styles.image__container}>
+          <TouchableOpacity activeOpacity={0.7} style={styles.play__button}>
+            <Ionicons name="play" size={28} color={COLORS.white1} />
+          </TouchableOpacity>
+        </ImageBackground>
+
+        <Text numberOfLines={1} style={styles.song__title}>
+          {item.title}
+        </Text>
+
+        <Text numberOfLines={1} style={styles.song__artist}>
+          {item.subtitle}
+        </Text>
+
+        <TouchableOpacity activeOpacity={0.7} style={styles.apple__button}>
+          <SVG.AppleMusicSVG width={50} height={15} fill={COLORS.white1} />
         </TouchableOpacity>
-      </ImageBackground>
-
-      <Text numberOfLines={1} style={styles.song__title}>
-        {item.title}
-      </Text>
-
-      <Text numberOfLines={1} style={styles.song__artist}>
-        {item.subtitle}
-      </Text>
-
-      <TouchableOpacity activeOpacity={0.7} style={styles.apple__button}>
-        <SVG.AppleMusicSVG width={50} height={15} fill={COLORS.white1} />
       </TouchableOpacity>
     </View>
   );
@@ -54,7 +69,7 @@ const TrackRelatedSongs = () => {
       <FlatList
         horizontal
         bounces={false}
-        data={DATA.TrackRelated.slice(0, 10)}
+        data={data?.tracks}
         renderItem={renderList}
         keyExtractor={item => item.key}
       />

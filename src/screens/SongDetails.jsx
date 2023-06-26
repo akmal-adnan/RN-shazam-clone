@@ -35,13 +35,11 @@ const SongDetails = ({navigation, route}) => {
 
   const {data: songDetailsData} = useGetSongDetailsQuery(songId);
 
-  const {data: songMetaData} = useGetSongMetaDataQuery(
-    songDetailsData?.data[0].id,
-  );
+  const newSongId = songDetailsData?.data[0].id;
 
-  const {data: songShazamCount} = useGetSongCountQuery(
-    songDetailsData?.data[0].id,
-  );
+  const {data: songMetaData} = useGetSongMetaDataQuery(newSongId);
+
+  const {data: songShazamCount} = useGetSongCountQuery(newSongId);
 
   const animateHeader = useAnimatedStyle(() => {
     const opacity = interpolate(
@@ -91,7 +89,15 @@ const SongDetails = ({navigation, route}) => {
           <Ionicons name="arrow-back" size={30} color={COLORS.white1} />
         </TouchableOpacity>
         <Animated.Text
-          style={[titileOpacity, {...styles.header__text, paddingLeft: 18}]}>
+          numberOfLines={1}
+          style={[
+            titileOpacity,
+            {
+              ...styles.header__text,
+              paddingLeft: 18,
+              maxWidth: SIZES.width / 1.5,
+            },
+          ]}>
           {songMetaData?.title}
         </Animated.Text>
       </View>
@@ -246,23 +252,15 @@ const SongDetails = ({navigation, route}) => {
       </Text>
 
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Text style={{...FONTS.m4, color: COLORS.darkgrey}}>Track :</Text>
-        <Text style={{...FONTS.m4, color: COLORS.white1}}>
-          {songMetaData?.title}
-        </Text>
+        <Text style={styles.trackinfo__label}>Track :</Text>
+        <Text style={styles.trackinfo__text}>{songMetaData?.title}</Text>
       </View>
 
       <View style={{height: 1, backgroundColor: COLORS.black6}} />
 
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Text style={{...FONTS.m4, color: COLORS.darkgrey}}>Album :</Text>
-        <Text
-          style={{
-            ...FONTS.m4,
-            color: COLORS.white1,
-            maxWidth: SIZES.width / 1.3,
-            textAlign: 'right',
-          }}>
+        <Text style={styles.trackinfo__label}>Album :</Text>
+        <Text style={styles.trackinfo__text}>
           {songMetaData?.sections[0].metadata[0].text}
         </Text>
       </View>
@@ -270,8 +268,8 @@ const SongDetails = ({navigation, route}) => {
       <View style={{height: 1, backgroundColor: COLORS.black6}} />
 
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Text style={{...FONTS.m4, color: COLORS.darkgrey}}>Label :</Text>
-        <Text style={{...FONTS.m4, color: COLORS.white1}}>
+        <Text style={styles.trackinfo__label}>Label :</Text>
+        <Text style={styles.trackinfo__text}>
           {songMetaData?.sections[0].metadata[1].text}
         </Text>
       </View>
@@ -279,8 +277,8 @@ const SongDetails = ({navigation, route}) => {
       <View style={{height: 1, backgroundColor: COLORS.black6}} />
 
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Text style={{...FONTS.m4, color: COLORS.darkgrey}}>Released :</Text>
-        <Text style={{...FONTS.m4, color: COLORS.white1}}>
+        <Text style={styles.trackinfo__label}>Released :</Text>
+        <Text style={styles.trackinfo__text}>
           {songMetaData?.sections[0].metadata[2].text}
         </Text>
       </View>
@@ -349,14 +347,22 @@ const SongDetails = ({navigation, route}) => {
 
           <Animated.View layout={Layout}>
             {songMetaData?.artists[0].adamid && (
-              <TrackTopSongs adamid={songMetaData?.artists[0].adamid} />
+              <TrackTopSongs
+                navigation={navigation}
+                adamid={songMetaData?.artists[0].adamid}
+              />
             )}
           </Animated.View>
 
           <Animated.View layout={Layout}>{renderVideo()}</Animated.View>
 
           <Animated.View layout={Layout}>
-            <TrackRelatedSongs />
+            {newSongId && (
+              <TrackRelatedSongs
+                navigation={navigation}
+                newSongId={newSongId}
+              />
+            )}
           </Animated.View>
 
           <Animated.View layout={Layout}>
@@ -408,5 +414,14 @@ const styles = StyleSheet.create({
     width: '100%',
     height: SIZES.height / 1.22,
     bottom: 0,
+  },
+
+  trackinfo__label: {...FONTS.m4, color: COLORS.darkgrey},
+
+  trackinfo__text: {
+    ...FONTS.m4,
+    color: COLORS.white1,
+    maxWidth: SIZES.width / 1.3,
+    textAlign: 'right',
   },
 });
