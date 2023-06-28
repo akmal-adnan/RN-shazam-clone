@@ -14,6 +14,7 @@ const TrackYoutube = ({url}) => {
   const modifiedUrl = url?.replace('https://cdn.shazam.com/', '');
 
   const {data} = useGetSongVideoQuery(modifiedUrl);
+  console.log('component rendered');
 
   return (
     <View style={styles.video__container}>
