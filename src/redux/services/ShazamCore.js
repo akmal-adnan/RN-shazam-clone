@@ -41,7 +41,10 @@ export const ShazamCoreApi = createApi({
     getSongRelated: builder.query({
       query: ({songid, startFrom, pageSize}) =>
         `shazam/v3/en-US/MY/web/-/tracks/track-similarities-id-${songid}?startFrom=${startFrom}&pageSize=${pageSize}&connected=`,
-      // `shazam/v3/en-US/MY/web/-/tracks/track-similarities-id-658691211?startFrom=0&pageSize=20&connected=`,
+    }),
+
+    getSongVideo: builder.query({
+      query: url => `${url}`,
     }),
 
     getArtistDetails: builder.query({
@@ -69,6 +72,7 @@ export const {
   useGetSongMetaDataQuery,
   useGetSongCountQuery,
   useGetTopSongRelatedQuery,
+  useGetSongVideoQuery,
   useGetSongRelatedQuery,
   useGetArtistDetailsQuery,
   useGetSongsByCountryQuery,

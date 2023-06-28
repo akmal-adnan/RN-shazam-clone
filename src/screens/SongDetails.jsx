@@ -19,8 +19,13 @@ import Animated, {
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
-import {COLORS, FONTS, DATA, SIZES, SVG} from '../constants';
-import {ApplePlayButton, TrackRelatedSongs, TrackTopSongs} from '../components';
+import {COLORS, FONTS, SIZES, SVG} from '../constants';
+import {
+  ApplePlayButton,
+  TrackRelatedSongs,
+  TrackTopSongs,
+  TrackYoutube,
+} from '../components';
 import {
   useGetSongCountQuery,
   useGetSongDetailsQuery,
@@ -105,7 +110,6 @@ const SongDetails = ({navigation, route}) => {
       <Animated.View
         style={[iconOpacity, {flexDirection: 'row', alignItems: 'center'}]}>
         <TouchableOpacity
-          onPress={() => console.log('hi')}
           style={{flexDirection: 'row', alignItems: 'center'}}
           activeOpacity={0.6}>
           <MaterialCom name="playlist-music" size={30} color={COLORS.white1} />
@@ -181,62 +185,6 @@ const SongDetails = ({navigation, route}) => {
 
       <ApplePlayButton />
     </LinearGradient>
-  );
-
-  const renderVideo = () => (
-    <View style={{backgroundColor: COLORS.black5, paddingVertical: 35}}>
-      <Text
-        style={{
-          color: COLORS.white1,
-          ...FONTS.h3,
-          paddingBottom: 20,
-          paddingHorizontal: 16,
-        }}>
-        VIDEO
-      </Text>
-
-      <ImageBackground
-        source={{uri: DATA.TrackYoutube[0].image.url}}
-        resizeMode="contain"
-        imageStyle={{borderRadius: 10}}
-        style={{
-          alignSelf: 'center',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: SIZES.width / 1.1,
-          height: SIZES.width / 1.95,
-        }}>
-        <View
-          style={{
-            backgroundColor: 'white',
-            height: 30,
-            width: 40,
-            position: 'absolute',
-          }}
-        />
-        <TouchableOpacity activeOpacity={0.7}>
-          <MaterialCom name="youtube" size={80} color="#FE0000" />
-        </TouchableOpacity>
-      </ImageBackground>
-
-      <View
-        style={{
-          paddingHorizontal: 16,
-          paddingTop: 25,
-          paddingBottom: 10,
-          alignItems: 'center',
-        }}>
-        <Text
-          numberOfLines={1}
-          style={{
-            color: COLORS.white1,
-            width: SIZES.width / 1.4,
-            ...FONTS.h4,
-          }}>
-          {DATA.TrackYoutube[0].caption}
-        </Text>
-      </View>
-    </View>
   );
 
   const renderFooter = () => (
@@ -354,7 +302,11 @@ const SongDetails = ({navigation, route}) => {
             )}
           </Animated.View>
 
-          <Animated.View layout={Layout}>{renderVideo()}</Animated.View>
+          <Animated.View layout={Layout}>
+            {songMetaData?.sections[2].youtubeurl && (
+              <TrackYoutube url={songMetaData?.sections[2].youtubeurl} />
+            )}
+          </Animated.View>
 
           <Animated.View layout={Layout}>
             {newSongId && (

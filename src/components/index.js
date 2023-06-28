@@ -9,6 +9,7 @@ import PlayerButton from './PlayerButton';
 import RingAnimation from './RingAnimation';
 import RingOuter from './RingOuter';
 import ChartCountryList from './ChartCountryList';
+import TrackYoutube from './TrackYoutube';
 
 // eslint-disable-next-line import/prefer-default-export
 export {
@@ -23,4 +24,5 @@ export {
   RingAnimation,
   RingOuter,
   ChartCountryList,
+  TrackYoutube,
 };
