@@ -11,7 +11,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {COLORS, FONTS, SIZES, SVG} from '../constants';
 import {useGetSongRelatedQuery} from '../redux/services/ShazamCore';
 
-const TrackRelatedSongs = ({navigation, newSongId}) => {
+const TrackRelatedSongs = ({navigation, newSongId, setDisplay}) => {
   const {data} = useGetSongRelatedQuery({
     songid: newSongId,
     startFrom: 0,
@@ -25,7 +25,9 @@ const TrackRelatedSongs = ({navigation, newSongId}) => {
         onPress={() => {
           if (item.hub.actions) {
             navigation.push('SongDetails', {songId: item?.hub?.actions[0]?.id});
-          } else console.log('Something wrong');
+          } else {
+            setDisplay(true);
+          }
         }}>
         <ImageBackground
           source={{

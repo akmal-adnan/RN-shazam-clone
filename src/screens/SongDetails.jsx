@@ -17,6 +17,8 @@ import Animated, {
   Extrapolate,
   useSharedValue,
   useAnimatedScrollHandler,
+  FadeInDown,
+  FadeOut,
 } from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
 import {COLORS, FONTS, SIZES, SVG} from '../constants';
@@ -45,6 +47,14 @@ const SongDetails = ({navigation, route}) => {
   const {data: songMetaData} = useGetSongMetaDataQuery(newSongId);
 
   const {data: songShazamCount} = useGetSongCountQuery(newSongId);
+
+  const [display, setDisplay] = React.useState(false);
+
+  if (display) {
+    setTimeout(() => {
+      setDisplay(false);
+    }, 2000);
+  }
 
   const animateHeader = useAnimatedStyle(() => {
     const opacity = interpolate(
@@ -313,6 +323,7 @@ const SongDetails = ({navigation, route}) => {
               <TrackRelatedSongs
                 navigation={navigation}
                 newSongId={newSongId}
+                setDisplay={setDisplay}
               />
             )}
           </Animated.View>
@@ -323,6 +334,28 @@ const SongDetails = ({navigation, route}) => {
           </Animated.View>
         </Animated.ScrollView>
       </ImageBackground>
+
+      {display ? (
+        <Animated.View
+          entering={FadeInDown}
+          exiting={FadeOut}
+          style={{
+            backgroundColor: COLORS.darkgrey,
+            alignSelf: 'center',
+            position: 'absolute',
+            bottom: 80,
+            paddingVertical: 7,
+            paddingHorizontal: 20,
+            borderRadius: 5,
+          }}>
+          <Text style={{...FONTS.p4, color: COLORS.white1}}>
+            There are some problems with the api
+          </Text>
+        </Animated.View>
+      ) : (
+        // For exiting animation to work when component removed
+        <View />
+      )}
     </>
   );
 };
