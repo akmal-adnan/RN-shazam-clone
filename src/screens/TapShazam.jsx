@@ -84,12 +84,7 @@ const TapShazam = ({navigation, route}) => {
         zIndex: 1,
       }}
       onPress={() => navigation.goBack()}>
-      <Icons
-        name="close"
-        size={32}
-        color={COLORS.white1}
-        // style={{paddingTop: 5}}
-      />
+      <Icons name="close" size={32} color={COLORS.white1} />
     </Pressable>
   );
 
@@ -101,12 +96,12 @@ const TapShazam = ({navigation, route}) => {
       }}>
       <View style={{alignItems: 'center'}}>
         <Lottie
-          source={LOTTIE.SoundBarWhite}
+          source={LOTTIE.WaveLoading}
           autoPlay
           loop
           style={{
-            width: 40,
-            height: 40,
+            width: 25,
+            height: 25,
             marginBottom: 8,
           }}
         />
