@@ -20,11 +20,19 @@ import SearchIco from 'react-native-vector-icons/FontAwesome';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {SharedElement} from 'react-navigation-shared-element';
 import {COLORS, FONTS, IMAGES, SIZES, SVG} from '../constants';
+import {setupPlayer} from '../redux/services/PlaybackService';
 
 const Home = ({slidesRef, navigation, route}) => {
   const pulse = useSharedValue(1);
   const inset = useSafeAreaInsets();
   const {itemId} = route.params;
+
+  useEffect(() => {
+    async function setup() {
+      await setupPlayer();
+    }
+    setup();
+  }, []);
 
   // Top component
   const renderTop = () => (

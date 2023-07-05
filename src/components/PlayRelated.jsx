@@ -7,15 +7,24 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import Animated, {useAnimatedScrollHandler} from 'react-native-reanimated';
+import Animated, {
+  FadeIn,
+  FadeOut,
+  useAnimatedScrollHandler,
+} from 'react-native-reanimated';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {SIZES, FONTS, COLORS, DATA, SVG} from '../constants';
+import TrackPlayer from 'react-native-track-player';
+import {SIZES, FONTS, COLORS, SVG} from '../constants';
 
-const PlayRelated = ({AxisY}) => {
+const AnimatedImage = Animated.createAnimatedComponent(Image);
+
+const PlayRelated = ({AxisY, trackList, trackIndex}) => {
   const renderSongHeader = () => (
     <View style={styles.song__header}>
-      <Image
-        source={{uri: DATA?.TrackDetails[0]?.images.coverart}}
+      <AnimatedImage
+        entering={FadeIn.duration(500)}
+        exiting={FadeOut.duration(500)}
+        source={{uri: trackList[trackIndex]?.images}}
         resizeMode="cover"
         style={styles.song__image}
       />
@@ -33,14 +42,17 @@ const PlayRelated = ({AxisY}) => {
     </View>
   );
 
-  const renderSongsList = ({item}) => (
-    <TouchableOpacity activeOpacity={0.6} style={styles.song__button}>
+  const renderSongsList = ({item, index}) => (
+    <TouchableOpacity
+      activeOpacity={0.6}
+      style={styles.song__button}
+      onPress={() => TrackPlayer.skip(index)}>
       <View>
         <Text style={{...FONTS.h3, width: SIZES.width / 1.3}} numberOfLines={1}>
           {item.title}
         </Text>
         <Text style={{...FONTS.m4, width: SIZES.width / 1.3}} numberOfLines={1}>
-          {item.subtitle}
+          {item.artist}
         </Text>
       </View>
 
@@ -60,7 +72,7 @@ const PlayRelated = ({AxisY}) => {
         nestedScrollEnabled
         showsVerticalScrollIndicator={false}
         style={{backgroundColor: COLORS.white1, paddingBottom: 50}}
-        data={DATA.TrackRelated}
+        data={trackList}
         renderItem={renderSongsList}
         ListHeaderComponent={renderSongHeader}
         key={item => item.key}

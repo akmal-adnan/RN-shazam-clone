@@ -6,9 +6,9 @@ import Animated, {
 } from 'react-native-reanimated';
 import {Slider} from '@miblanchard/react-native-slider';
 import TrackPlayer, {useProgress} from 'react-native-track-player';
-import {COLORS, DATA, FONTS} from '../constants';
+import {COLORS, FONTS, SIZES} from '../constants';
 
-const PlayHeader = ({AxisY}) => {
+const PlayHeader = ({AxisY, trackList}) => {
   const progress = useProgress();
 
   const BorderColor = useAnimatedStyle(() => {
@@ -50,8 +50,14 @@ const PlayHeader = ({AxisY}) => {
 
       <Animated.View style={[BorderColor, styles.header__container]}>
         <Text style={{...FONTS.h4, color: COLORS.orange}}>PLAYING</Text>
-        <Text style={{...FONTS.h4, color: COLORS.black1}}>
-          Similar to {DATA.TrackDetails[0].title}
+        <Text
+          numberOfLines={1}
+          style={{
+            ...FONTS.h4,
+            color: COLORS.black1,
+            maxWidth: SIZES.width / 1.4,
+          }}>
+          Similar to {trackList[0]?.title}
         </Text>
       </Animated.View>
     </View>

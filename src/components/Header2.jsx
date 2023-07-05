@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {COLORS, FONTS, SIZES} from '../constants';
 
-const Header2 = ({navigation, trackList}) => {
+const Header2 = ({navigation, trackList, trackIndex}) => {
   const insets = useSafeAreaInsets();
 
   return (
@@ -22,12 +22,24 @@ const Header2 = ({navigation, trackList}) => {
         </TouchableOpacity>
 
         <View style={{alignItems: 'center', rowGap: 4}}>
-          <Text style={{color: COLORS.white1, ...FONTS.h3}}>
-            {trackList[0]?.title}
+          <Text
+            numberOfLines={1}
+            style={{
+              color: COLORS.white1,
+              ...FONTS.h3,
+              maxWidth: SIZES.width / 1.3,
+              textAlign: 'center',
+            }}>
+            {trackList[trackIndex]?.title}
           </Text>
 
-          <Text style={{color: COLORS.white1, ...FONTS.m5}}>
-            {trackList[0]?.artist}
+          <Text
+            style={{
+              color: COLORS.white1,
+              ...FONTS.m5,
+              maxWidth: SIZES.width / 1.3,
+            }}>
+            {trackList[trackIndex]?.artist}
           </Text>
         </View>
 

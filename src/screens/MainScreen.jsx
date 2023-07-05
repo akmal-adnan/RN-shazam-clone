@@ -9,6 +9,7 @@ import Animated, {
   useAnimatedScrollHandler,
   interpolateColor,
 } from 'react-native-reanimated';
+import {useSelector} from 'react-redux';
 import Home from './Home';
 import Charts from './Charts';
 import Library from './Library';
@@ -88,6 +89,8 @@ const MainScreen = ({navigation, route}) => {
   const slidesRef = useRef();
   const scrollX = useSharedValue(393);
 
+  const isPlaying = useSelector(state => state.player.isPlaying);
+
   const SCREEN = [
     {
       key: 'library',
@@ -156,7 +159,7 @@ const MainScreen = ({navigation, route}) => {
         <TheDot data={SCREEN} scrollX={scrollX} />
       </View>
 
-      <FloatButton navigation={navigation} />
+      {isPlaying && <FloatButton navigation={navigation} />}
     </>
   );
 };

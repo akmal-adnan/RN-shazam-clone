@@ -13,9 +13,13 @@ import Animated, {
   useSharedValue,
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
+
+import {useSelector, useDispatch} from 'react-redux';
 import {FONTS, COLORS, SIZES, SVG} from '../constants';
 import {Header} from '../components';
 import {useGetTopChartsQuery} from '../redux/services/ShazamCore';
+import {setPlaying} from '../redux/features/playerSlices';
+import FloatButton from '../components/FloatButton';
 
 const ReanimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -27,6 +31,9 @@ const SubCharts = ({navigation, route}) => {
     listid,
     limitCount: 20,
   });
+
+  const isPlaying = useSelector(state => state.player.isPlaying);
+  const dispatch = useDispatch();
 
   const renderButton = () => (
     <View style={{paddingVertical: 15, alignItems: 'center'}}>
@@ -84,6 +91,7 @@ const SubCharts = ({navigation, route}) => {
             </View>
 
             <TouchableOpacity
+              onPress={() => dispatch(setPlaying(!isPlaying))}
               activeOpacity={0.7}
               style={{
                 backgroundColor: 'rgba(0,0,0,0.6)',
@@ -93,7 +101,11 @@ const SubCharts = ({navigation, route}) => {
                 padding: 14,
                 marginTop: 10,
               }}>
-              <Ionicons name="play" size={18} color={COLORS.white1} />
+              <Ionicons
+                name={isPlaying ? 'pause' : 'play'}
+                size={18}
+                color={COLORS.white1}
+              />
             </TouchableOpacity>
           </ImageBackground>
 
@@ -176,6 +188,8 @@ const SubCharts = ({navigation, route}) => {
           scrollY.value = event.contentOffset.y;
         })}
       />
+
+      {isPlaying && <FloatButton navigation={navigation} />}
     </View>
   );
 };

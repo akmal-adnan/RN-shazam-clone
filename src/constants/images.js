@@ -10,6 +10,8 @@ const ChartsIcon = require('../assets/images/charts.png');
 
 const SoundBar = require('../assets/animations/icon_equalizer.json');
 const SoundBarWhite = require('../assets/animations/icon_equalizer_white.json');
+const Loading = require('../assets/animations/loading.json');
+const WaveLoading = require('../assets/animations/wave_loading.json');
 
 export const IMAGES = {
   AppleMusic,
@@ -28,6 +30,8 @@ export const SVG = {
 export const LOTTIE = {
   SoundBar,
   SoundBarWhite,
+  Loading,
+  WaveLoading,
 };
 
 export default {IMAGES, SVG, LOTTIE};

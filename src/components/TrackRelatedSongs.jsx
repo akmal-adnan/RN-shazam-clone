@@ -8,15 +8,17 @@ import {
   FlatList,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Animated, {FadeInDown, FadeOut} from 'react-native-reanimated';
 import {COLORS, FONTS, SIZES, SVG} from '../constants';
-import {useGetSongRelatedQuery} from '../redux/services/ShazamCore';
 
-const TrackRelatedSongs = ({navigation, newSongId, setDisplay}) => {
-  const {data} = useGetSongRelatedQuery({
-    songid: newSongId,
-    startFrom: 0,
-    pageSize: 10,
-  });
+const TrackRelatedSongs = ({navigation, songTrackRelated}) => {
+  const [display, setDisplay] = React.useState(false);
+
+  if (display) {
+    setTimeout(() => {
+      setDisplay(false);
+    }, 2000);
+  }
 
   const renderList = ({item, index}) => (
     <View style={{paddingLeft: index === 0 ? 16 : 0, paddingRight: 16}}>
@@ -36,9 +38,11 @@ const TrackRelatedSongs = ({navigation, newSongId, setDisplay}) => {
           resizeMode="contain"
           imageStyle={styles.image__style}
           style={styles.image__container}>
-          <TouchableOpacity activeOpacity={0.7} style={styles.play__button}>
-            <Ionicons name="play" size={28} color={COLORS.white1} />
-          </TouchableOpacity>
+          {item.hub.actions && (
+            <TouchableOpacity activeOpacity={0.7} style={styles.play__button}>
+              <Ionicons name="play" size={28} color={COLORS.white1} />
+            </TouchableOpacity>
+          )}
         </ImageBackground>
 
         <Text numberOfLines={1} style={styles.song__title}>
@@ -57,25 +61,50 @@ const TrackRelatedSongs = ({navigation, newSongId, setDisplay}) => {
   );
 
   return (
-    <View style={{backgroundColor: COLORS.black1, paddingVertical: 35}}>
-      <Text
-        style={{
-          color: COLORS.white1,
-          ...FONTS.h3,
-          paddingBottom: 20,
-          paddingHorizontal: 16,
-        }}>
-        YOU MAY ALSO LIKE
-      </Text>
+    <>
+      <View style={{backgroundColor: COLORS.black1, paddingVertical: 35}}>
+        <Text
+          style={{
+            color: COLORS.white1,
+            ...FONTS.h3,
+            paddingBottom: 20,
+            paddingHorizontal: 16,
+          }}>
+          YOU MAY ALSO LIKE
+        </Text>
 
-      <FlatList
-        horizontal
-        bounces={false}
-        data={data?.tracks}
-        renderItem={renderList}
-        keyExtractor={item => item.key}
-      />
-    </View>
+        <FlatList
+          horizontal
+          bounces={false}
+          data={songTrackRelated?.tracks}
+          renderItem={renderList}
+          keyExtractor={item => item.key}
+        />
+      </View>
+
+      {display ? (
+        <Animated.View
+          entering={FadeInDown}
+          exiting={FadeOut}
+          style={{
+            backgroundColor: COLORS.darkgrey,
+            position: 'absolute',
+            alignSelf: 'center',
+            justifyContent: 'center',
+            paddingVertical: 7,
+            paddingHorizontal: 20,
+            borderRadius: 5,
+            bottom: 0,
+          }}>
+          <Text style={{...FONTS.p4, color: COLORS.white1}}>
+            There are some problems with the api
+          </Text>
+        </Animated.View>
+      ) : (
+        // For exiting animation to work when component removed
+        <View />
+      )}
+    </>
   );
 };
 
@@ -104,7 +133,7 @@ const styles = StyleSheet.create({
   song__title: {
     ...FONTS.m3,
     color: COLORS.white1,
-    width: 100,
+    width: 140,
     paddingTop: 10,
     paddingBottom: 5,
   },

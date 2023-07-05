@@ -17,10 +17,10 @@ import Animated, {
   Extrapolate,
   useSharedValue,
   useAnimatedScrollHandler,
-  FadeInDown,
-  FadeOut,
 } from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
+import {useSelector, useDispatch} from 'react-redux';
+import TrackPlayer from 'react-native-track-player';
 import {COLORS, FONTS, SIZES, SVG} from '../constants';
 import {
   ApplePlayButton,
@@ -32,29 +32,54 @@ import {
   useGetSongCountQuery,
   useGetSongDetailsQuery,
   useGetSongMetaDataQuery,
+  useGetSongRelatedQuery,
 } from '../redux/services/ShazamCore';
+import FloatButton from '../components/FloatButton';
+import {
+  setCurrentTrack,
+  setPlaying,
+  setTracks,
+} from '../redux/features/playerSlices';
+import {addTracks} from '../redux/services/PlaybackService';
 
 const SongDetails = ({navigation, route}) => {
   const insets = useSafeAreaInsets();
   const scrollY = useSharedValue(0);
-
   const {songId} = route.params;
 
   const {data: songDetailsData} = useGetSongDetailsQuery(songId);
-
   const newSongId = songDetailsData?.data[0].id;
 
   const {data: songMetaData} = useGetSongMetaDataQuery(newSongId);
-
   const {data: songShazamCount} = useGetSongCountQuery(newSongId);
+  const {data: songTrackRelated} = useGetSongRelatedQuery({
+    songid: newSongId,
+    startFrom: 0,
+    pageSize: 10,
+  });
 
-  const [display, setDisplay] = React.useState(false);
+  const isPlaying = useSelector(state => state.player.isPlaying);
+  const dispatch = useDispatch();
 
-  if (display) {
-    setTimeout(() => {
-      setDisplay(false);
-    }, 2000);
-  }
+  const TRACK = songTrackRelated?.tracks
+    .map(track => ({
+      id: track?.key,
+      url: track?.hub?.actions?.find(action => action.type === 'uri').uri,
+      title: track?.title,
+      artist: track?.subtitle,
+      images: track?.images?.coverart,
+    }))
+    .filter(track => track.images !== undefined && track.url !== undefined);
+
+  const oriTrack = {
+    id: songMetaData?.key,
+    url: songMetaData?.hub?.actions?.find(action => action.type === 'uri').uri,
+    title: songMetaData?.title,
+    artist: songMetaData?.subtitle,
+    images: songMetaData?.images.coverart,
+  };
+
+  const updatedTrack = [oriTrack].concat(TRACK);
 
   const animateHeader = useAnimatedStyle(() => {
     const opacity = interpolate(
@@ -70,7 +95,7 @@ const SongDetails = ({navigation, route}) => {
     };
   });
 
-  const titileOpacity = useAnimatedStyle(() => {
+  const titleOpacity = useAnimatedStyle(() => {
     const opacity = interpolate(
       scrollY.value,
       [436, 460],
@@ -92,6 +117,20 @@ const SongDetails = ({navigation, route}) => {
     return {opacity};
   });
 
+  const handlePlay = async () => {
+    if (!isPlaying) {
+      await TrackPlayer.reset();
+      dispatch(setTracks(updatedTrack));
+      dispatch(setCurrentTrack(oriTrack));
+      dispatch(setPlaying(!isPlaying));
+      await addTracks(updatedTrack);
+      await TrackPlayer.play();
+    } else {
+      dispatch(setPlaying(!isPlaying));
+      await TrackPlayer.pause();
+    }
+  };
+
   const renderHeader = () => (
     <Animated.View
       style={[
@@ -103,16 +142,10 @@ const SongDetails = ({navigation, route}) => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={30} color={COLORS.white1} />
         </TouchableOpacity>
+
         <Animated.Text
           numberOfLines={1}
-          style={[
-            titileOpacity,
-            {
-              ...styles.header__text,
-              paddingLeft: 18,
-              maxWidth: SIZES.width / 1.5,
-            },
-          ]}>
+          style={[titleOpacity, styles.header__title]}>
           {songMetaData?.title}
         </Animated.Text>
       </View>
@@ -157,7 +190,13 @@ const SongDetails = ({navigation, route}) => {
       }}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View>
-          <Text style={{color: COLORS.white1, ...FONTS.h1, paddingBottom: 5}}>
+          <Text
+            style={{
+              color: COLORS.white1,
+              ...FONTS.h1,
+              paddingBottom: 5,
+              maxWidth: SIZES.width / 1.3,
+            }}>
             {songMetaData?.title}
           </Text>
           <Text style={{color: COLORS.icon2, ...FONTS.p4, paddingBottom: 5}}>
@@ -178,6 +217,7 @@ const SongDetails = ({navigation, route}) => {
         </View>
 
         <TouchableOpacity
+          onPress={handlePlay}
           activeOpacity={0.7}
           style={{
             backgroundColor: 'rgba(212,212,212,0.13)',
@@ -189,7 +229,11 @@ const SongDetails = ({navigation, route}) => {
             paddingLeft: 3,
             marginBottom: 55,
           }}>
-          <Ionicons name="play" size={28} color={COLORS.white1} />
+          <Ionicons
+            name={isPlaying ? 'pause' : 'play'}
+            size={28}
+            color={COLORS.white1}
+          />
         </TouchableOpacity>
       </View>
 
@@ -265,98 +309,79 @@ const SongDetails = ({navigation, route}) => {
   );
 
   return (
-    <>
+    <ImageBackground
+      source={{
+        uri: songMetaData?.images?.background,
+      }}
+      resizeMode="cover"
+      imageStyle={{
+        width: SIZES.width,
+        height: SIZES.height / 1.7,
+      }}
+      style={{backgroundColor: COLORS.black1}}>
       <StatusBar
         backgroundColor="transparent"
         translucent
         barStyle="light-content"
       />
-      <ImageBackground
-        source={{
-          uri: songMetaData?.images?.background,
-        }}
-        resizeMode="cover"
-        imageStyle={{
-          width: SIZES.width,
-          height: SIZES.height / 1.7,
-        }}
-        style={{backgroundColor: COLORS.black1}}>
-        {/* Top Header */}
-        {renderHeader()}
 
-        <LinearGradient
-          colors={[
-            'rgba(0,0,0, 0)',
-            'rgba(0,0,0, 0)',
-            'rgba(0,0,0, 0.95)',
-            'rgba(0,0,0, 1)',
-            'rgba(0,0,0, 1)',
-          ]}
-          style={styles.linear__bottom}
-        />
+      {/* Top Header */}
+      {renderHeader()}
 
-        <Animated.ScrollView
-          bounces={false}
-          scrollEventThrottle={16}
-          onScroll={useAnimatedScrollHandler(event => {
-            scrollY.value = event.contentOffset.y;
-          })}>
-          {renderItemTop()}
+      <LinearGradient
+        colors={[
+          'rgba(0,0,0, 0)',
+          'rgba(0,0,0, 0)',
+          'rgba(0,0,0, 0.95)',
+          'rgba(0,0,0, 1)',
+          'rgba(0,0,0, 1)',
+        ]}
+        style={styles.linear__bottom}
+      />
 
-          <Animated.View layout={Layout}>
-            {songMetaData?.artists[0].adamid && (
-              <TrackTopSongs
-                navigation={navigation}
-                adamid={songMetaData?.artists[0].adamid}
-              />
-            )}
-          </Animated.View>
+      <Animated.ScrollView
+        bounces={false}
+        scrollEventThrottle={16}
+        onScroll={useAnimatedScrollHandler(event => {
+          scrollY.value = event.contentOffset.y;
+        })}>
+        {renderItemTop()}
 
-          <Animated.View layout={Layout}>
-            {songMetaData?.sections[2].youtubeurl && (
-              <TrackYoutube url={songMetaData?.sections[2].youtubeurl} />
-            )}
-          </Animated.View>
-
-          <Animated.View layout={Layout}>
-            {newSongId && (
-              <TrackRelatedSongs
-                navigation={navigation}
-                newSongId={newSongId}
-                setDisplay={setDisplay}
-              />
-            )}
-          </Animated.View>
-
-          <Animated.View layout={Layout}>
-            {renderFooter()}
-            {shareButton()}
-          </Animated.View>
-        </Animated.ScrollView>
-      </ImageBackground>
-
-      {display ? (
-        <Animated.View
-          entering={FadeInDown}
-          exiting={FadeOut}
-          style={{
-            backgroundColor: COLORS.darkgrey,
-            alignSelf: 'center',
-            position: 'absolute',
-            bottom: 80,
-            paddingVertical: 7,
-            paddingHorizontal: 20,
-            borderRadius: 5,
-          }}>
-          <Text style={{...FONTS.p4, color: COLORS.white1}}>
-            There are some problems with the api
-          </Text>
+        <Animated.View layout={Layout}>
+          {songMetaData?.artists[0].adamid && (
+            <TrackTopSongs
+              navigation={navigation}
+              adamid={songMetaData?.artists[0].adamid}
+            />
+          )}
         </Animated.View>
-      ) : (
-        // For exiting animation to work when component removed
-        <View />
-      )}
-    </>
+
+        <Animated.View layout={Layout}>
+          {songMetaData?.sections[2].youtubeurl && (
+            <TrackYoutube url={songMetaData?.sections[2].youtubeurl} />
+          )}
+        </Animated.View>
+
+        <Animated.View layout={Layout}>
+          {newSongId && (
+            <TrackRelatedSongs
+              navigation={navigation}
+              songTrackRelated={songTrackRelated}
+            />
+          )}
+        </Animated.View>
+
+        <Animated.View layout={Layout}>
+          {renderFooter()}
+          {shareButton()}
+        </Animated.View>
+      </Animated.ScrollView>
+
+      {
+        // for animated float buton
+        isPlaying ? <FloatButton navigation={navigation} /> : <View />
+      }
+    </ImageBackground>
   );
 };
 
@@ -380,6 +405,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
     paddingLeft: 3,
     color: COLORS.white1,
+  },
+
+  header__title: {
+    ...FONTS.m5,
+    fontSize: 15,
+    paddingLeft: 3,
+    color: COLORS.white1,
+    marginLeft: 34,
+    maxWidth: SIZES.width / 1.5,
+    position: 'absolute',
   },
 
   shadow: {

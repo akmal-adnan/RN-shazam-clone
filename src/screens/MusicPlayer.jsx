@@ -1,5 +1,5 @@
 import {FlatList, StatusBar, StyleSheet, ImageBackground} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -8,7 +8,9 @@ import Animated, {
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
-import {COLORS, DATA, SIZES} from '../constants';
+import {useSelector} from 'react-redux';
+import TrackPlayer from 'react-native-track-player';
+import {COLORS, SIZES} from '../constants';
 import {
   ApplePlayButton,
   Header2,
@@ -22,6 +24,29 @@ const ReanimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const MusicPlayer = ({navigation}) => {
   const scrollY = useSharedValue(0);
   const AxisY = useSharedValue(0);
+
+  const playerState = useSelector(state => state.player);
+  const {tracks} = playerState;
+
+  const [trackIndex, setTrackIndex] = useState(0);
+
+  useEffect(() => {
+    async function setup() {
+      await getCurrentTrackInfo();
+    }
+    setup();
+
+    const listener = TrackPlayer.addEventListener(
+      'playback-track-changed',
+      () => {
+        getCurrentTrackInfo();
+      },
+    );
+
+    return () => {
+      listener.remove();
+    };
+  }, [tracks]);
 
   const TranslateY = useAnimatedStyle(() => {
     const translateY = interpolate(
@@ -45,11 +70,22 @@ const MusicPlayer = ({navigation}) => {
     return {opacity};
   });
 
+  const getCurrentTrackInfo = async () => {
+    try {
+      const index = await TrackPlayer.getCurrentTrack();
+      setTrackIndex(index);
+    } catch (error) {
+      console.log('Error retrieving current track:', error);
+    }
+  };
+
   const renderPlayer = () => (
     <LinearGradient colors={styles.linear__grad1}>
       <Animated.View style={[TranslateY, styles.player__container]}>
-        <PlayerButton />
+        {/* Media player */}
+        <PlayerButton trackIndex={trackIndex} trackLength={tracks.length} />
 
+        {/* Playfull songs button */}
         <Animated.View style={[AnimatedOpacity]}>
           <ApplePlayButton />
         </Animated.View>
@@ -57,14 +93,21 @@ const MusicPlayer = ({navigation}) => {
     </LinearGradient>
   );
 
-  const renderList = () => <PlayHeader AxisY={AxisY} />;
+  // This is the trackbar progress
+  const renderTrackBar = () => <PlayHeader AxisY={AxisY} trackList={tracks} />;
+
+  // This is the related song list
+  const renderTrackList = useCallback(
+    () => (
+      <PlayRelated AxisY={AxisY} trackList={tracks} trackIndex={trackIndex} />
+    ),
+    [AxisY, trackIndex, tracks],
+  );
 
   return (
     <ImageBackground
       source={{
-        uri: DATA?.TrackDetails[0]?.images.coverart
-          .replace('400', 800)
-          .replace('400', 800),
+        uri: tracks[trackIndex]?.images.replace('400', 800).replace('400', 800),
       }}
       resizeMode="cover"
       style={styles.imageBg__container}>
@@ -84,7 +127,11 @@ const MusicPlayer = ({navigation}) => {
         style={styles.linear__bottom}
       />
 
-      <Header2 navigation={navigation} />
+      <Header2
+        navigation={navigation}
+        trackList={tracks}
+        trackIndex={trackIndex}
+      />
 
       <ReanimatedFlatList
         bounces={false}
@@ -93,8 +140,8 @@ const MusicPlayer = ({navigation}) => {
         data={[{key: 1}]}
         keyExtractor={item => item.key}
         ListHeaderComponent={renderPlayer}
-        renderItem={renderList}
-        ListFooterComponent={<PlayRelated AxisY={AxisY} />}
+        renderItem={renderTrackBar}
+        ListFooterComponent={renderTrackList()}
         ListFooterComponentStyle={{height: SIZES.height / 1.53}}
         scrollEventThrottle={16}
         onScroll={useAnimatedScrollHandler(event => {
