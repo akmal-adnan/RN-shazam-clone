@@ -3,9 +3,9 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {COLORS, DATA, FONTS, SIZES} from '../constants';
+import {COLORS, FONTS, SIZES} from '../constants';
 
-const Header2 = ({navigation}) => {
+const Header2 = ({navigation, trackList}) => {
   const insets = useSafeAreaInsets();
 
   return (
@@ -23,11 +23,11 @@ const Header2 = ({navigation}) => {
 
         <View style={{alignItems: 'center', rowGap: 4}}>
           <Text style={{color: COLORS.white1, ...FONTS.h3}}>
-            {DATA.TrackDetails[0].title}
+            {trackList[0]?.title}
           </Text>
 
           <Text style={{color: COLORS.white1, ...FONTS.m5}}>
-            {DATA.TrackDetails[0].subtitle}
+            {trackList[0]?.artist}
           </Text>
         </View>
 
