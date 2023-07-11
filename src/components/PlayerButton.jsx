@@ -8,8 +8,7 @@ import {COLORS, SIZES} from '../constants';
 
 const PlayerButton = ({trackIndex, trackLength}) => {
   const dispatch = useDispatch();
-  const playerState = useSelector(state => state.player);
-  const {isPlaying} = playerState;
+  const {isPlaying} = useSelector(state => state.player);
 
   const handlePlay = async () => {
     if (isPlaying === true) {

@@ -58,7 +58,7 @@ const SongDetails = ({navigation, route}) => {
     pageSize: 10,
   });
 
-  const isPlaying = useSelector(state => state.player.isPlaying);
+  const {isPlaying, currentTrack} = useSelector(state => state.player);
   const dispatch = useDispatch();
 
   const TRACK = songTrackRelated?.tracks
@@ -79,7 +79,7 @@ const SongDetails = ({navigation, route}) => {
     images: songMetaData?.images.coverart,
   };
 
-  const updatedTrack = [oriTrack].concat(TRACK);
+  const mergeTrack = [oriTrack].concat(TRACK);
 
   const animateHeader = useAnimatedStyle(() => {
     const opacity = interpolate(
@@ -118,16 +118,25 @@ const SongDetails = ({navigation, route}) => {
   });
 
   const handlePlay = async () => {
-    if (!isPlaying) {
-      await TrackPlayer.reset();
-      dispatch(setTracks(updatedTrack));
-      dispatch(setCurrentTrack(oriTrack));
-      dispatch(setPlaying(!isPlaying));
-      await addTracks(updatedTrack);
-      await TrackPlayer.play();
+    if (currentTrack.id === songMetaData.key) {
+      if (!isPlaying) {
+        await TrackPlayer.reset();
+        dispatch(setTracks(mergeTrack));
+        dispatch(setCurrentTrack(oriTrack));
+        dispatch(setPlaying(!isPlaying));
+        await addTracks(mergeTrack);
+        await TrackPlayer.play();
+      } else {
+        dispatch(setPlaying(!isPlaying));
+        await TrackPlayer.pause();
+      }
     } else {
-      dispatch(setPlaying(!isPlaying));
-      await TrackPlayer.pause();
+      await TrackPlayer.reset();
+      await addTracks(mergeTrack);
+      dispatch(setTracks(mergeTrack));
+      dispatch(setCurrentTrack(oriTrack));
+      dispatch(setPlaying(true));
+      await TrackPlayer.play();
     }
   };
 
@@ -229,11 +238,15 @@ const SongDetails = ({navigation, route}) => {
             paddingLeft: 3,
             marginBottom: 55,
           }}>
-          <Ionicons
-            name={isPlaying ? 'pause' : 'play'}
-            size={28}
-            color={COLORS.white1}
-          />
+          {currentTrack.id === oriTrack.id ? (
+            <Ionicons
+              name={isPlaying ? 'pause' : 'play'}
+              size={28}
+              color={COLORS.white1}
+            />
+          ) : (
+            <Ionicons name="play" size={28} color={COLORS.white1} />
+          )}
         </TouchableOpacity>
       </View>
 

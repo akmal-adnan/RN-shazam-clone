@@ -1,5 +1,5 @@
 import {FlatList, StatusBar, StyleSheet, ImageBackground} from 'react-native';
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, useRef} from 'react';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -22,13 +22,19 @@ import {
 const ReanimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const MusicPlayer = ({navigation}) => {
+  const scrollRef = useRef();
   const scrollY = useSharedValue(0);
   const AxisY = useSharedValue(0);
 
   const playerState = useSelector(state => state.player);
   const {tracks} = playerState;
-
   const [trackIndex, setTrackIndex] = useState(0);
+
+  useEffect(() => {
+    setTimeout(() => {
+      scrollRef.current?.scrollToEnd({animated: false});
+    }, 150);
+  }, []);
 
   useEffect(() => {
     async function setup() {
@@ -134,6 +140,7 @@ const MusicPlayer = ({navigation}) => {
       />
 
       <ReanimatedFlatList
+        ref={scrollRef}
         bounces={false}
         nestedScrollEnabled
         showsVerticalScrollIndicator={false}
