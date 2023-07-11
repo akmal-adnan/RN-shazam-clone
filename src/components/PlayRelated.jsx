@@ -61,6 +61,7 @@ const PlayRelated = ({AxisY, trackList, trackIndex}) => {
       </TouchableOpacity>
     </TouchableOpacity>
   );
+
   return (
     <Animated.ScrollView
       bounces={false}
