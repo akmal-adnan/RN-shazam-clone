@@ -8,8 +8,8 @@ const FloatButton = ({navigation}) => {
   const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
   return (
     <AnimatedTouchable
-      entering={ZoomIn}
-      exiting={ZoomOut}
+      entering={ZoomIn.duration(200)}
+      exiting={ZoomOut.duration(200)}
       onPress={() => navigation.push('MusicPlayer')}
       activeOpacity={0.7}
       style={{

@@ -72,7 +72,11 @@ const PlayRelated = ({AxisY, trackList, trackIndex}) => {
       <FlatList
         nestedScrollEnabled
         showsVerticalScrollIndicator={false}
-        style={{backgroundColor: COLORS.white1, paddingBottom: 50}}
+        style={{
+          backgroundColor: COLORS.white1,
+          paddingBottom: 50,
+          minHeight: SIZES.height / 1.53,
+        }}
         data={trackList}
         renderItem={renderSongsList}
         ListHeaderComponent={renderSongHeader}
