@@ -121,10 +121,10 @@ const SongDetails = ({navigation, route}) => {
     if (currentTrack.id === songMetaData.key) {
       if (!isPlaying) {
         await TrackPlayer.reset();
+        await addTracks(mergeTrack);
         dispatch(setTracks(mergeTrack));
         dispatch(setCurrentTrack(oriTrack));
         dispatch(setPlaying(!isPlaying));
-        await addTracks(mergeTrack);
         await TrackPlayer.play();
       } else {
         dispatch(setPlaying(!isPlaying));
@@ -238,14 +238,14 @@ const SongDetails = ({navigation, route}) => {
             paddingLeft: 3,
             marginBottom: 55,
           }}>
-          {currentTrack.id === oriTrack.id ? (
+          {songMetaData?.key === currentTrack.id ? (
             <Ionicons
               name={isPlaying ? 'pause' : 'play'}
-              size={28}
+              size={21}
               color={COLORS.white1}
             />
           ) : (
-            <Ionicons name="play" size={28} color={COLORS.white1} />
+            <Ionicons name="play" size={21} color={COLORS.white1} />
           )}
         </TouchableOpacity>
       </View>
