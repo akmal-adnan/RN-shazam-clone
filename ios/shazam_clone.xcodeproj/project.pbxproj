@@ -14,6 +14,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2A88ADDAE3EE4CDB8DAE6431 /* NeueMontreal-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = E706540A7ECA46B0BE61532F /* NeueMontreal-Light.otf */; };
 		4D3B728582A1409BA761EFFF /* Arial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85DC0B64CE60451797700D47 /* Arial.ttf */; };
+		58F49F8F33BE153CE4DEDDC9 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C224C5891333A2A80F1F00DE /* ExpoModulesProvider.swift */; };
 		73DC2C369574451FAC496C63 /* NeueMontreal-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5E3C56BCC824A638843C7F8 /* NeueMontreal-Medium.otf */; };
 		7699B88040F8A987B510C191 /* libPods-shazam_clone-shazam_cloneTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-shazam_clone-shazam_cloneTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -23,6 +24,7 @@
 		C1A2B9FC29C8843A00992DC5 /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A2B9FB29C8843A00992DC5 /* dummy.swift */; };
 		C1C8891529ACB6300004A917 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1C8891429ACB6300004A917 /* BootSplash.storyboard */; };
 		C1ED3FB129A7B66200112DB7 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = C1ED3FB029A7B66200112DB7 /* Fonts */; };
+		C81D0893860D50B97AE8A1ED /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC394AD8E6677BA0878990D3 /* ExpoModulesProvider.swift */; };
 		FDAACB99ABE24C0A9B1B6944 /* Arial-Bold-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E44C5BF3A0EB433FA6F1597F /* Arial-Bold-Italic.ttf */; };
 /* End PBXBuildFile section */
 
@@ -61,9 +63,11 @@
 		C1A2B9FB29C8843A00992DC5 /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
 		C1C8891429ACB6300004A917 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = shazam_clone/BootSplash.storyboard; sourceTree = "<group>"; };
 		C1ED3FB029A7B66200112DB7 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
+		C224C5891333A2A80F1F00DE /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-shazam_clone/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		D07E635CA1584F6089B17650 /* NeueMontreal-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NeueMontreal-Bold.otf"; path = "../src/assets/fonts/NeueMontreal-Bold.otf"; sourceTree = "<group>"; };
 		E44C5BF3A0EB433FA6F1597F /* Arial-Bold-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Arial-Bold-Italic.ttf"; path = "../src/assets/fonts/Arial-Bold-Italic.ttf"; sourceTree = "<group>"; };
 		E706540A7ECA46B0BE61532F /* NeueMontreal-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NeueMontreal-Light.otf"; path = "../src/assets/fonts/NeueMontreal-Light.otf"; sourceTree = "<group>"; };
+		EC394AD8E6677BA0878990D3 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-shazam_clone-shazam_cloneTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -129,6 +133,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		56292267D19A14AE9CEBDBBF /* shazam_clone */ = {
+			isa = PBXGroup;
+			children = (
+				C224C5891333A2A80F1F00DE /* ExpoModulesProvider.swift */,
+			);
+			name = shazam_clone;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +160,7 @@
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
 				D9AFA19886CE412AAA8921BF /* Resources */,
 				C1A2B9FA29C8843A00992DC5 /* shazam_clone-Bridging-Header.h */,
+				CF6E9FB76D5EA3057504C331 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -174,6 +187,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		CF6E9FB76D5EA3057504C331 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				56292267D19A14AE9CEBDBBF /* shazam_clone */,
+				E74970B24251B24A8CDAAF1E /* shazam_cloneTests */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
 		D9AFA19886CE412AAA8921BF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +208,14 @@
 				67BD4EA9D06A4596BAFBB5A3 /* Arial-Bold.ttf */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		E74970B24251B24A8CDAAF1E /* shazam_cloneTests */ = {
+			isa = PBXGroup;
+			children = (
+				EC394AD8E6677BA0878990D3 /* ExpoModulesProvider.swift */,
+			);
+			name = shazam_cloneTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -454,6 +484,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E356F31AD99517003FC87E /* shazam_cloneTests.m in Sources */,
+				C81D0893860D50B97AE8A1ED /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,6 +495,7 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				C1A2B9FC29C8843A00992DC5 /* dummy.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				58F49F8F33BE153CE4DEDDC9 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,7 +521,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = shazam_cloneTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -500,6 +532,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/shazam_clone.app/shazam_clone";
@@ -514,7 +547,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = shazam_cloneTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -525,6 +558,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/shazam_clone.app/shazam_clone";
@@ -550,6 +584,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = shazam_clone;
 				SWIFT_OBJC_BRIDGING_HEADER = "shazam_clone-Bridging-Header.h";
@@ -577,6 +612,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = shazam_clone;
 				SWIFT_OBJC_BRIDGING_HEADER = "shazam_clone-Bridging-Header.h";
@@ -634,7 +670,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -699,7 +735,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",

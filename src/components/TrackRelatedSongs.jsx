@@ -171,7 +171,8 @@ const TrackRelatedSongs = ({navigation, songTrackRelated}) => {
           bounces={false}
           data={songTrackRelated?.tracks}
           renderItem={renderList}
-          keyExtractor={item => item.key}
+          // Suppress some duplicate key api problem
+          keyExtractor={(_, index) => index}
         />
       </View>
 

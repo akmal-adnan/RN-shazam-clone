@@ -17,6 +17,7 @@ import Animated, {
   Extrapolate,
   useSharedValue,
   useAnimatedScrollHandler,
+  FadeIn,
 } from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSelector, useDispatch} from 'react-redux';
@@ -27,6 +28,7 @@ import {
   TrackRelatedSongs,
   TrackTopSongs,
   TrackYoutube,
+  TrackVideo,
 } from '../components';
 import {
   useGetSongCountQuery,
@@ -351,6 +353,13 @@ const SongDetails = ({navigation, route}) => {
         ]}
         style={styles.linear__bottom}
       />
+
+      {/* For auto video player */}
+      <Animated.View entering={FadeIn.delay(1200)}>
+        <TrackVideo
+          videoUrl={songMetaData?.highlightsurls?.trackhighlighturl}
+        />
+      </Animated.View>
 
       <Animated.ScrollView
         bounces={false}

@@ -80,7 +80,7 @@ const PlayRelated = ({AxisY, trackList, trackIndex}) => {
         data={trackList}
         renderItem={renderSongsList}
         ListHeaderComponent={renderSongHeader}
-        key={item => item.key}
+        keyExtractor={(_, index) => index}
       />
     </Animated.ScrollView>
   );

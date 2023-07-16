@@ -1,11 +1,20 @@
-import {FlatList, StatusBar, StyleSheet, ImageBackground} from 'react-native';
 import React, {useEffect, useState, useCallback, useRef} from 'react';
+import {
+  FlatList,
+  StatusBar,
+  StyleSheet,
+  ImageBackground,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   interpolate,
   Extrapolate,
   useAnimatedScrollHandler,
+  FadeIn,
+  FadeOut,
 } from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSelector} from 'react-redux';
@@ -20,6 +29,7 @@ import {
 } from '../components';
 
 const ReanimatedFlatList = Animated.createAnimatedComponent(FlatList);
+const ReanimatedImage = Animated.createAnimatedComponent(Image);
 
 const MusicPlayer = ({navigation}) => {
   const scrollRef = useRef();
@@ -29,6 +39,12 @@ const MusicPlayer = ({navigation}) => {
   const playerState = useSelector(state => state.player);
   const {tracks} = playerState;
   const [trackIndex, setTrackIndex] = useState(0);
+
+  const [isVisible, setIsVisible] = useState(true);
+
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -45,6 +61,7 @@ const MusicPlayer = ({navigation}) => {
     const listener = TrackPlayer.addEventListener(
       'playback-track-changed',
       () => {
+        setIsVisible(false);
         getCurrentTrackInfo();
       },
     );
@@ -80,6 +97,7 @@ const MusicPlayer = ({navigation}) => {
     try {
       const index = await TrackPlayer.getCurrentTrack();
       setTrackIndex(index);
+      setIsVisible(true);
     } catch (error) {
       console.log('Error retrieving current track:', error);
     }
@@ -93,7 +111,9 @@ const MusicPlayer = ({navigation}) => {
 
         {/* Playfull songs button */}
         <Animated.View style={[AnimatedOpacity]}>
-          <ApplePlayButton />
+          <TouchableOpacity onPress={() => toggleVisibility()}>
+            <ApplePlayButton />
+          </TouchableOpacity>
         </Animated.View>
       </Animated.View>
     </LinearGradient>
@@ -110,18 +130,38 @@ const MusicPlayer = ({navigation}) => {
     [AxisY, trackIndex, tracks],
   );
 
+  const renderImage = useCallback(
+    () => (
+      <Animated.View style={{position: 'absolute', zIndex: -1}}>
+        <ReanimatedImage
+          entering={FadeIn.duration(500)}
+          exiting={FadeOut.duration(500)}
+          style={{
+            width: SIZES.width,
+            height: SIZES.height / 1.5,
+          }}
+          resizeMode="cover"
+          source={{
+            uri: tracks[trackIndex]?.images
+              .replace('400', 800)
+              .replace('400', 800),
+          }}
+        />
+      </Animated.View>
+    ),
+    [trackIndex, tracks],
+  );
+
   return (
-    <ImageBackground
-      source={{
-        uri: tracks[trackIndex]?.images.replace('400', 800).replace('400', 800),
-      }}
-      resizeMode="cover"
-      style={styles.imageBg__container}>
+    <ImageBackground resizeMode="cover" style={styles.imageBg__container}>
       <StatusBar
         backgroundColor="transparent"
         translucent
         barStyle="light-content"
       />
+
+      {/* Image background replace with this image for fade animation transition */}
+      {isVisible && renderImage()}
 
       <LinearGradient
         colors={styles.linear__grad2}
@@ -199,7 +239,7 @@ const styles = StyleSheet.create({
   imageBg__container: {
     width: SIZES.width,
     height: SIZES.height / 1.5,
-    backgroundColor: COLORS.white1,
+    backgroundColor: COLORS.black1,
     flex: 1,
   },
 
