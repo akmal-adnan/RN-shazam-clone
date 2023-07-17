@@ -15,11 +15,17 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import {useSelector, useDispatch} from 'react-redux';
+import TrackPlayer from 'react-native-track-player';
 import {FONTS, COLORS, SIZES, SVG} from '../constants';
 import {Header} from '../components';
 import {useGetTopChartsQuery} from '../redux/services/ShazamCore';
-import {setPlaying} from '../redux/features/playerSlices';
+import {
+  setCurrentTrack,
+  setPlaying,
+  setTracks,
+} from '../redux/features/playerSlices';
 import FloatButton from '../components/FloatButton';
+import {addTracks} from '../redux/services/PlaybackService';
 
 const ReanimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -32,8 +38,43 @@ const SubCharts = ({navigation, route}) => {
     limitCount: 20,
   });
 
-  const isPlaying = useSelector(state => state.player.isPlaying);
+  const {isPlaying, currentTrack} = useSelector(state => state.player);
   const dispatch = useDispatch();
+
+  const TRACK = data?.data
+    .map(track => ({
+      id: track?.id,
+      url: track?.attributes.previews[0].url,
+      title: track?.attributes.name,
+      artist: track?.attributes.artistName,
+      images: track?.attributes.artwork.url
+        .replace('{w}', '400')
+        .replace('{h}', '400'),
+    }))
+    .filter(track => track.images !== undefined && track.url !== undefined);
+
+  const handlePlay = async (oriTrack, uniqueTracks) => {
+    if (currentTrack.id === oriTrack.id) {
+      if (!isPlaying) {
+        await TrackPlayer.reset();
+        await addTracks(uniqueTracks);
+        dispatch(setTracks(uniqueTracks));
+        dispatch(setCurrentTrack(oriTrack));
+        dispatch(setPlaying(!isPlaying));
+        await TrackPlayer.play();
+      } else {
+        dispatch(setPlaying(!isPlaying));
+        await TrackPlayer.pause();
+      }
+    } else {
+      await TrackPlayer.reset();
+      await addTracks(uniqueTracks);
+      dispatch(setTracks(uniqueTracks));
+      dispatch(setCurrentTrack(oriTrack));
+      dispatch(setPlaying(true));
+      await TrackPlayer.play();
+    }
+  };
 
   const renderButton = () => (
     <View style={{paddingVertical: 15, alignItems: 'center'}}>
@@ -54,6 +95,20 @@ const SubCharts = ({navigation, route}) => {
     const imageUrl = item?.attributes?.artwork.url
       .replace('{w}', '400')
       .replace('{h}', '400');
+
+    const oriTrack = {
+      id: item?.id,
+      url: item?.attributes.previews[0].url,
+      title: item?.attributes.name,
+      artist: item?.attributes.artistName,
+      images: imageUrl,
+    };
+
+    const mergeTrack = [oriTrack].concat(TRACK);
+    const uniqueTracks = mergeTrack.filter(
+      (track, index2, self) =>
+        self.findIndex(t => t.id === track.id) === index2,
+    );
 
     return (
       <Animated.View entering={FadeIn}>
@@ -91,7 +146,7 @@ const SubCharts = ({navigation, route}) => {
             </View>
 
             <TouchableOpacity
-              onPress={() => dispatch(setPlaying(!isPlaying))}
+              onPress={() => handlePlay(oriTrack, uniqueTracks)}
               activeOpacity={0.7}
               style={{
                 backgroundColor: 'rgba(0,0,0,0.6)',
@@ -101,11 +156,15 @@ const SubCharts = ({navigation, route}) => {
                 padding: 14,
                 marginTop: 10,
               }}>
-              <Ionicons
-                name={isPlaying ? 'pause' : 'play'}
-                size={18}
-                color={COLORS.white1}
-              />
+              {item.id === currentTrack.id ? (
+                <Ionicons
+                  name={isPlaying ? 'pause' : 'play'}
+                  size={18}
+                  color={COLORS.white1}
+                />
+              ) : (
+                <Ionicons name="play" size={21} color={COLORS.white1} />
+              )}
             </TouchableOpacity>
           </ImageBackground>
 
