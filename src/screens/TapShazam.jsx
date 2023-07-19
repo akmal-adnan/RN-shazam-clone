@@ -67,10 +67,15 @@ const TapShazam = ({navigation, route}) => {
       ))}
 
       <SharedElement id={`item.${itemId}.photo`}>
-        <Animated.View
-          style={[styles.shazam__logo, styles.shadow, pulseAnimation]}>
-          <SVG.ShazamLogo2SVG width={110} height={110} fill={COLORS.white1} />
-        </Animated.View>
+        <Pressable
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <Animated.View
+            style={[styles.shazam__logo, styles.shadow, pulseAnimation]}>
+            <SVG.ShazamLogo2SVG width={110} height={110} fill={COLORS.white1} />
+          </Animated.View>
+        </Pressable>
       </SharedElement>
     </View>
   );

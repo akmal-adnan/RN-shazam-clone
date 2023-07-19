@@ -114,7 +114,10 @@ const SubCharts = ({navigation, route}) => {
       <Animated.View entering={FadeIn}>
         <TouchableOpacity
           onPress={() =>
-            navigation.push('SongDetails', {songId: item?.id, listid})
+            navigation.push('SongDetails', {
+              songId: item?.id,
+              songImage: imageUrl,
+            })
           }
           onLongPress={() => console.log('Multiselect action')}
           activeOpacity={0.7}

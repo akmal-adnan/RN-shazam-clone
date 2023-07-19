@@ -138,6 +138,7 @@ const MainScreen = ({navigation, route}) => {
         translucent
         barStyle="dark-content"
       />
+
       <ReanimatedFlatList
         ref={slidesRef}
         bounces={false}

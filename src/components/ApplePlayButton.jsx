@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {FONTS, COLORS} from '../constants';
 
 const ApplePlayButton = ({Bgcolor, buttonColor}) => (
-  <View style={{paddingVertical: 30, backgroundColor: Bgcolor || null}}>
+  <View style={{paddingVertical: 30, backgroundColor: Bgcolor}}>
     <TouchableOpacity
       activeOpacity={0.7}
       style={{

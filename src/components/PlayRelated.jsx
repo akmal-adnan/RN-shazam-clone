@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {
   StyleSheet,
   Text,
@@ -18,40 +18,46 @@ import {SIZES, FONTS, COLORS, SVG} from '../constants';
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 
-const PlayRelated = ({AxisY, trackList, trackIndex}) => {
-  const renderSongHeader = () => (
-    <View style={styles.song__header}>
-      <AnimatedImage
-        entering={FadeIn.duration(500)}
-        exiting={FadeOut.duration(500)}
-        source={{uri: trackList[trackIndex]?.images}}
-        resizeMode="cover"
-        style={styles.song__image}
-      />
+const PlayRelated = ({AxisY, trackList, imageUrl}) => {
+  const renderSongHeader = useCallback(
+    () => (
+      <View style={styles.song__header}>
+        <AnimatedImage
+          entering={FadeIn.duration(500)}
+          exiting={FadeOut.duration(500)}
+          source={{uri: imageUrl}}
+          resizeMode="cover"
+          style={styles.song__image}
+        />
 
-      <View style={{justifyContent: 'space-between', paddingLeft: 16}}>
-        <Text style={styles.song__textdesc}>
-          Listen to full songs, albums and more on Apple Music.
-        </Text>
+        <View style={{justifyContent: 'space-between', paddingLeft: 16}}>
+          <Text style={styles.song__textdesc}>
+            Listen to full songs, albums and more on Apple Music.
+          </Text>
 
-        <TouchableOpacity style={styles.apple__button}>
-          <Text style={{color: COLORS.white1, ...FONTS.m4}}>Listen on </Text>
-          <SVG.AppleMusicSVG fill={COLORS.white1} width={60} height={20} />
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.apple__button}>
+            <Text style={{color: COLORS.white1, ...FONTS.m4}}>Listen on </Text>
+            <SVG.AppleMusicSVG fill={COLORS.white1} width={60} height={20} />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    ),
+    [imageUrl],
   );
-
   const renderSongsList = ({item, index}) => (
     <TouchableOpacity
       activeOpacity={0.6}
       style={styles.song__button}
       onPress={() => TrackPlayer.skip(index)}>
       <View>
-        <Text style={{...FONTS.h3, width: SIZES.width / 1.3}} numberOfLines={1}>
+        <Text
+          style={{...FONTS.h3, width: SIZES.width / 1.3, color: COLORS.black1}}
+          numberOfLines={1}>
           {item.title}
         </Text>
-        <Text style={{...FONTS.m4, width: SIZES.width / 1.3}} numberOfLines={1}>
+        <Text
+          style={{...FONTS.m4, width: SIZES.width / 1.3, color: COLORS.black1}}
+          numberOfLines={1}>
           {item.artist}
         </Text>
       </View>
@@ -65,6 +71,8 @@ const PlayRelated = ({AxisY, trackList, trackIndex}) => {
   return (
     <Animated.ScrollView
       bounces={false}
+      overScrollMode="never"
+      nestedScrollEnabled
       scrollEventThrottle={16}
       onScroll={useAnimatedScrollHandler(event => {
         AxisY.value = event.contentOffset.y;

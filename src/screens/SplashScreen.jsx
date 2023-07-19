@@ -1,4 +1,4 @@
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, StatusBar, StyleSheet, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {SharedElement} from 'react-navigation-shared-element';
 import {IMAGES, COLORS} from '../constants';
@@ -22,7 +22,16 @@ const SplashScreen = ({navigation}) => {
     </SharedElement>
   );
 
-  return <View style={styles.container}>{renderShazamLogo()}</View>;
+  return (
+    <View style={styles.container}>
+      <StatusBar
+        backgroundColor="transparent"
+        translucent
+        barStyle="dark-content"
+      />
+      {renderShazamLogo()}
+    </View>
+  );
 };
 
 export default SplashScreen;

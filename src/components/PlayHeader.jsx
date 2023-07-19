@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     columnGap: 16,
     alignItems: 'center',
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 1,
   },
 
   sound__bar2: {

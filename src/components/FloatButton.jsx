@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, TouchableOpacity} from 'react-native';
 import Lottie from 'lottie-react-native';
 import Animated, {ZoomIn, ZoomOut} from 'react-native-reanimated';
 import {COLORS, LOTTIE} from '../constants';
@@ -28,7 +28,15 @@ const FloatButton = ({navigation}) => {
         source={LOTTIE.SoundBar}
         autoPlay
         loop
-        style={{width: 35, height: 35}}
+        style={
+          Platform.OS === 'ios'
+            ? {width: 35, height: 35}
+            : [
+                {
+                  transform: [{scale: 1.2}],
+                },
+              ]
+        }
       />
     </AnimatedTouchable>
   );

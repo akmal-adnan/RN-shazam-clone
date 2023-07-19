@@ -34,25 +34,37 @@ const fadeTrandisiton = () => ({
   }),
 });
 
+const fadeTrandisitonSplash = () => ({
+  transitionSpec: {
+    open: {animation: 'timing', config: {duration: 1000}},
+    close: {animation: 'timing', config: {duration: 1000}},
+  },
+  cardStyleInterpolator: ({current: {progress}}) => ({
+    cardStyle: {
+      opacity: progress,
+    },
+  }),
+});
+
 const RootStack = () => (
   <Stack.Navigator screenOptions={screenOptionStyle}>
     <Stack.Screen
       name="SplashScreen"
       component={SplashScreen}
-      options={fadeTrandisiton}
+      options={fadeTrandisitonSplash}
     />
 
     <Stack.Screen
       name="MainScreen"
       component={MainScreen}
-      options={fadeTrandisiton}
+      options={fadeTrandisitonSplash}
       // eslint-disable-next-line consistent-return
-      sharedElements={(route, otherRoute) => {
-        const {itemId} = route.params;
-        if (otherRoute.name === 'SplashScreen') {
-          return [`item.${itemId}.photo`];
-        }
-      }}
+      // sharedElements={(route, otherRoute) => {
+      //   const {itemId} = route.params;
+      //   if (otherRoute.name === 'SplashScreen') {
+      //     return [`item.${itemId}.photo`];
+      //   }
+      // }}
     />
 
     <Stack.Screen name="Home" component={Home} options={transitionOptions} />

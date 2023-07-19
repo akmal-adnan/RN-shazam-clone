@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   StatusBar,
+  LogBox,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -45,6 +46,7 @@ import {
 import {addTracks} from '../redux/services/PlaybackService';
 
 const SongDetails = ({navigation, route}) => {
+  LogBox.ignoreLogs([`ReactImageView: Image source "null" doesn't exist`]);
   const insets = useSafeAreaInsets();
   const scrollY = useSharedValue(0);
   const {songId} = route.params;
