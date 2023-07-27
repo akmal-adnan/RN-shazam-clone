@@ -22,6 +22,8 @@ import {SharedElement} from 'react-navigation-shared-element';
 import {COLORS, FONTS, IMAGES, SIZES, SVG} from '../constants';
 import {setupPlayer} from '../redux/services/PlaybackService';
 
+const AnimatedPress = Animated.createAnimatedComponent(Pressable);
+
 const Home = ({slidesRef, navigation}) => {
   const pulse = useSharedValue(1);
   const inset = useSafeAreaInsets();
@@ -94,15 +96,13 @@ const Home = ({slidesRef, navigation}) => {
       <Text style={styles.shazam__text}>Tap to Shazam</Text>
 
       <SharedElement id={`item.${itemId}.photo`}>
-        <Pressable
+        <AnimatedPress
+          style={[styles.shazam__logo, styles.shadow, pulseAnimation]}
           onPress={() => {
             navigation.push('TapShazam', {itemId});
           }}>
-          <Animated.View
-            style={[styles.shazam__logo, styles.shadow, pulseAnimation]}>
-            <SVG.ShazamLogo2SVG width={150} height={150} fill={COLORS.white1} />
-          </Animated.View>
-        </Pressable>
+          <SVG.ShazamLogo2SVG width={150} height={150} fill={COLORS.white1} />
+        </AnimatedPress>
       </SharedElement>
 
       <View style={[styles.search__container, styles.shadow]}>

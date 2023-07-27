@@ -18,6 +18,8 @@ import Lottie from 'lottie-react-native';
 import {COLORS, FONTS, LOTTIE, SIZES, SVG} from '../constants';
 import {RingAnimation, RingOuter} from '../components';
 
+const AnimatedPress = Animated.createAnimatedComponent(Pressable);
+
 const TapShazam = ({navigation, route}) => {
   const {itemId} = route.params;
   const inset = useSafeAreaInsets();
@@ -67,15 +69,13 @@ const TapShazam = ({navigation, route}) => {
       ))}
 
       <SharedElement id={`item.${itemId}.photo`}>
-        <Pressable
+        <AnimatedPress
+          style={[styles.shazam__logo, styles.shadow, pulseAnimation]}
           onPress={() => {
             navigation.goBack();
           }}>
-          <Animated.View
-            style={[styles.shazam__logo, styles.shadow, pulseAnimation]}>
-            <SVG.ShazamLogo2SVG width={110} height={110} fill={COLORS.white1} />
-          </Animated.View>
-        </Pressable>
+          <SVG.ShazamLogo2SVG width={110} height={110} fill={COLORS.white1} />
+        </AnimatedPress>
       </SharedElement>
     </View>
   );
