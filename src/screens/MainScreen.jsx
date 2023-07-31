@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useMemo} from 'react';
 import {View, FlatList, StyleSheet, StatusBar, Platform} from 'react-native';
 import Animated, {
   useSharedValue,
@@ -87,26 +87,29 @@ const TheDot = ({scrollX}) => {
 
 const MainScreen = ({navigation, route}) => {
   const slidesRef = useRef();
-  const scrollX = useSharedValue(393);
+  const scrollX = useSharedValue(390);
 
   const isPlaying = useSelector(state => state.player.isPlaying);
 
-  const SCREEN = [
-    {
-      key: 'library',
-      component: <Library navigation={navigation} slidesRef={slidesRef} />,
-    },
-    {
-      key: 'home',
-      component: (
-        <Home navigation={navigation} slidesRef={slidesRef} route={route} />
-      ),
-    },
-    {
-      key: 'charts',
-      component: <Charts navigation={navigation} slidesRef={slidesRef} />,
-    },
-  ];
+  const SCREEN = useMemo(
+    () => [
+      {
+        key: 'library',
+        component: <Library navigation={navigation} slidesRef={slidesRef} />,
+      },
+      {
+        key: 'home',
+        component: (
+          <Home navigation={navigation} slidesRef={slidesRef} route={route} />
+        ),
+      },
+      {
+        key: 'charts',
+        component: <Charts navigation={navigation} slidesRef={slidesRef} />,
+      },
+    ],
+    [navigation, route, slidesRef],
+  );
 
   useEffect(() => {
     slidesRef.current?.scrollToIndex({index: 1, animated: false});
@@ -129,6 +132,17 @@ const MainScreen = ({navigation, route}) => {
     <View style={{width: SIZES.width, height: SIZES.height}}>
       {item.component}
     </View>
+  );
+
+  const renderIndicator = useMemo(
+    () => (
+      <View style={styles.indicator__container}>
+        <PageIndicator data={SCREEN} scrollX={scrollX} />
+        <TheDot data={SCREEN} scrollX={scrollX} />
+      </View>
+    ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
   );
 
   return (
@@ -155,10 +169,7 @@ const MainScreen = ({navigation, route}) => {
         })}
       />
 
-      <View style={styles.indicator__container}>
-        <PageIndicator data={SCREEN} scrollX={scrollX} />
-        <TheDot data={SCREEN} scrollX={scrollX} />
-      </View>
+      {renderIndicator}
 
       {isPlaying && <FloatButton navigation={navigation} />}
     </>
