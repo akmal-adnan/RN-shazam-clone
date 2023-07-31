@@ -166,7 +166,7 @@ const SubCharts = ({navigation, route}) => {
                   color={COLORS.white1}
                 />
               ) : (
-                <Ionicons name="play" size={21} color={COLORS.white1} />
+                <Ionicons name="play" size={18} color={COLORS.white1} />
               )}
             </TouchableOpacity>
           </ImageBackground>

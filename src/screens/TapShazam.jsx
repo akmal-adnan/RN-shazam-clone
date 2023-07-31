@@ -74,7 +74,9 @@ const TapShazam = ({navigation, route}) => {
           onPress={() => {
             navigation.goBack();
           }}>
-          <SVG.ShazamLogo2SVG width={110} height={110} fill={COLORS.white1} />
+          <View>
+            <SVG.ShazamLogo2SVG width={110} height={110} fill={COLORS.white1} />
+          </View>
         </AnimatedPress>
       </SharedElement>
     </View>

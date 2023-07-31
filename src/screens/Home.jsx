@@ -101,7 +101,9 @@ const Home = ({slidesRef, navigation}) => {
           onPress={() => {
             navigation.push('TapShazam', {itemId});
           }}>
-          <SVG.ShazamLogo2SVG width={150} height={150} fill={COLORS.white1} />
+          <View>
+            <SVG.ShazamLogo2SVG width={150} height={150} fill={COLORS.white1} />
+          </View>
         </AnimatedPress>
       </SharedElement>
 
